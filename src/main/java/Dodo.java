@@ -45,9 +45,6 @@ public class Dodo {
                 }
                 case "deadline": {
                     String[] details = nextLineArr[1].split(" /by ",2);
-                        for (int i = 0; i < details.length; i++) {
-                            System.out.println(details[i]);
-                        }
                     Task newTask = new Deadline(details[0], details[1]);
                     tasks.add(newTask);
                     System.out.println("Added this to your list:\n" + newTask.toString());
@@ -55,9 +52,6 @@ public class Dodo {
                 }
                 case "event": {
                     String[] details = nextLineArr[1].split(" \\/from | \\/to ",3);
-                    for (int i = 0; i < details.length; i++) {
-                        System.out.println(details[i]);
-                    }
                     Task newTask = new Event(details[0], details[1], details[2]);
                     tasks.add(newTask);
                     System.out.println("Added this to your list:\n" + newTask.toString());

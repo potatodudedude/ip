@@ -1,0 +1,24 @@
+huh
+list
+todo a
+deadline b /by today
+event c /from noon /to night
+list
+mark 0
+mark 4
+unmark 0
+unmark 4
+mark 1
+mark 2
+mark 3
+mark 1
+mark 2
+mark 3
+unmark 1
+unmark 2
+unmark 3
+unmark 1
+unmark 2
+unmark 3
+list
+bye

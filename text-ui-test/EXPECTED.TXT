@@ -1,7 +1,54 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+ _____   ____  _____   ____  
+|  __ \ / __ \|  __ \ / __ \ 
+| |  | | |  | | |  | | |  | |
+| |  | | |  | | |  | | |  | |
+| |__| | |__| | |__| | |__| |
+|_____/ \____/|_____/ \____/ 
 
+Hello! This is Dodo.
+What is your command?
+Sorry, I don't recognise this command :(
+You have no tasks. Yay!
+Added this to your list:
+[T][ ] a
+Added this to your list:
+[D][ ] b (by: today)
+Added this to your list:
+[E][ ] c (from: noon to: night)
+Here are your tasks:
+1. [T][ ] a
+2. [D][ ] b (by: today)
+3. [E][ ] c (from: noon to: night)
+Task number 0 doesn't exist dodohead!
+Task number 4 doesn't exist dodohead!
+Task number 0 doesn't exist dodohead!
+Task number 4 doesn't exist dodohead!
+Marked as done:
+[T][X] a
+Marked as done:
+[D][X] b (by: today)
+Marked as done:
+[E][X] c (from: noon to: night)
+Following task is already marked done:
+[T][X] a
+Following task is already marked done:
+[D][X] b (by: today)
+Following task is already marked done:
+[E][X] c (from: noon to: night)
+Marked as undone:
+[T][ ] a
+Marked as undone:
+[D][ ] b (by: today)
+Marked as undone:
+[E][ ] c (from: noon to: night)
+Following task is already marked undone:
+[T][ ] a
+Following task is already marked undone:
+[D][ ] b (by: today)
+Following task is already marked undone:
+[E][ ] c (from: noon to: night)
+Here are your tasks:
+1. [T][ ] a
+2. [D][ ] b (by: today)
+3. [E][ ] c (from: noon to: night)
+See You! :)

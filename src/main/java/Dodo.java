@@ -45,7 +45,52 @@ public class Dodo {
                     tasks.add(newTask);
                     System.out.println("Added this to your list:\n" + newTask.toString());
                     break;
-
+                case "mark":
+                    try{
+                        int targetNo = Integer.parseInt(nextLineArr[1]);
+                    }
+                    catch (NumberFormatException ex){
+                        System.out.println("Mark command needs to be done as follows without brackets:\n" +
+                                "mark (task number)");
+                        break;
+                    }
+                    int doneTarget = Integer.parseInt(nextLineArr[1]);
+                    if (doneTarget > tasks.size() || doneTarget < 1) {
+                        System.out.println("Task number " + doneTarget + " doesn't exist dodohead!");
+                        break;
+                    }
+                    doneTarget--;
+                    Task doneTask = tasks.get(doneTarget);
+                    if (doneTask.getMark()) {
+                        System.out.println("Following task is already marked done:\n" + doneTask.toString());
+                        break;
+                    }
+                    doneTask.markDone();
+                    System.out.println("Marked as done:\n" + doneTask.toString());
+                    break;
+                case "unmark":
+                    try{
+                        int targetNo = Integer.parseInt(nextLineArr[1]);
+                    }
+                    catch (NumberFormatException ex){
+                        System.out.println("Unmark command needs to be done as follows without brackets:\n" +
+                                "unmark (task number)");
+                        break;
+                    }
+                    int undoneTarget = Integer.parseInt(nextLineArr[1]);
+                    if (undoneTarget > tasks.size() || undoneTarget < 1) {
+                        System.out.println("Task number " + undoneTarget + " doesn't exist dodohead!");
+                        break;
+                    }
+                    undoneTarget--;
+                    Task undoneTask = tasks.get(undoneTarget);
+                    if (!undoneTask.getMark()) {
+                        System.out.println("Following task is already marked undone:\n" + undoneTask.toString());
+                        break;
+                    }
+                    undoneTask.markUndone();
+                    System.out.println("Marked as undone:\n" + undoneTask.toString());
+                    break;
                 default:
                     System.out.println("Sorry, I don't recognise this command :(");
                     break;

@@ -5,6 +5,7 @@ public class Dodo {
     public static void main(String[] args) {
         Scanner userInput = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<Task>();
+        String regex = "\\s";
         String logo = " _____   ____  _____   ____  \n"
                 + "|  __ \\ / __ \\|  __ \\ / __ \\ \n"
                 + "| |  | | |  | | |  | | |  | |\n"
@@ -19,7 +20,15 @@ public class Dodo {
                 System.out.println("See You! :)");
                 break;
             }
-            switch (nextLine) {
+            if (nextLine.isEmpty()) {
+                System.out.println("You've gotta enter a command first dodo head!");
+                continue;
+            }
+            String[] nextLineArr = nextLine.split(regex, 2);
+//            for (int i = 0; i < nextLineArr.length; i++) {
+//                System.out.println(nextLineArr[i]);
+//            }
+            switch (nextLineArr[0]) {
                 case "list":
                     if (tasks.isEmpty()) {
                         System.out.println("You have no tasks. Yay!");
@@ -31,10 +40,14 @@ public class Dodo {
                         System.out.println(taskNo + ". " + tasks.get(i).toString());
                     }
                     break;
-                default:
-                    Task newTask = new Task(nextLine);
+                case "add":
+                    Task newTask = new Task(nextLineArr[1]);
                     tasks.add(newTask);
-                    System.out.println("Task (" + nextLine + ") added to your list");
+                    System.out.println("Added this to your list:\n" + newTask.toString());
+                    break;
+
+                default:
+                    System.out.println("Sorry, I don't recognise this command :(");
                     break;
             }
         }

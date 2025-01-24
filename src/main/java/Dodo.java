@@ -40,7 +40,7 @@ public class Dodo {
                         System.out.println(taskNo + ". " + tasks.get(i).toString());
                     }
                     break;
-                case "add":
+                case "todo":
                     Task newTask = new Task(nextLineArr[1]);
                     tasks.add(newTask);
                     System.out.println("Added this to your list:\n" + newTask.toString());

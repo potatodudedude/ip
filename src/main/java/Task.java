@@ -1,6 +1,7 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String time;
 
     public Task(String description) {
         this.description = description;
@@ -25,12 +26,12 @@ public class Task {
 
     @Override
     public String toString() {
-        String marker;
+        String doneMarker;
         if (isDone) {
-            marker = "[X]";
+            doneMarker = "[X]";
         } else {
-            marker = "[ ]";
+            doneMarker = "[ ]";
         }
-        return marker + " " + description;
+        return doneMarker + " " + description;
     }
 }

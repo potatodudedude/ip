@@ -25,9 +25,6 @@ public class Dodo {
                 continue;
             }
             String[] nextLineArr = nextLine.split(regex, 2);
-//            for (int i = 0; i < nextLineArr.length; i++) {
-//                System.out.println(nextLineArr[i]);
-//            }
             switch (nextLineArr[0]) {
                 case "list":
                     if (tasks.isEmpty()) {
@@ -40,11 +37,32 @@ public class Dodo {
                         System.out.println(taskNo + ". " + tasks.get(i).toString());
                     }
                     break;
-                case "todo":
-                    Task newTask = new Task(nextLineArr[1]);
+                case "todo": {
+                    Task newTask = new Todo(nextLineArr[1]);
                     tasks.add(newTask);
                     System.out.println("Added this to your list:\n" + newTask.toString());
                     break;
+                }
+                case "deadline": {
+                    String[] details = nextLineArr[1].split(" /by ",2);
+                        for (int i = 0; i < details.length; i++) {
+                            System.out.println(details[i]);
+                        }
+                    Task newTask = new Deadline(details[0], details[1]);
+                    tasks.add(newTask);
+                    System.out.println("Added this to your list:\n" + newTask.toString());
+                    break;
+                }
+                case "event": {
+                    String[] details = nextLineArr[1].split(" \\/from | \\/to ",3);
+                    for (int i = 0; i < details.length; i++) {
+                        System.out.println(details[i]);
+                    }
+                    Task newTask = new Event(details[0], details[1], details[2]);
+                    tasks.add(newTask);
+                    System.out.println("Added this to your list:\n" + newTask.toString());
+                    break;
+                }
                 case "mark":
                     try{
                         int targetNo = Integer.parseInt(nextLineArr[1]);

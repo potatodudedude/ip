@@ -19,14 +19,17 @@ deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'
 event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from 'start' to 'end'
 mark 'task number' -> marks corresponding task as done
 unmark 'task number' -> marks corresponding task as undone
-bye -> dododo
+delete 'task number' -> removes corresponding taskbye -> dododo
 You have no tasks. Yay!
 Added this to your list:
 [T][ ] a
+You now have 1 task(s).
 Added this to your list:
 [D][ ] b (by: 1)
+You now have 2 task(s).
 Added this to your list:
 [E][ ] c (from: 1 to: 2)
+You now have 3 task(s).
 Deadline commands needs to be structured as follows:
 deadline 'name' /by 'time'
 Event commands needs to be structured as follows:
@@ -51,4 +54,7 @@ Marked as done:
 [E][X] c (from: 1 to: 2)
 Marked as undone:
 [E][ ] c (from: 1 to: 2)
+The following task has been destroyed:
+[E][ ] c (from: 1 to: 2)
+You now have 2 task(s).
 K bye bye :)

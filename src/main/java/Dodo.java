@@ -10,6 +10,14 @@ public class Dodo {
         }
     }
 
+    public static void deleteCommandCheck(String[] commands) throws DodoException {
+        if (commands.length != 2)  {
+            throw new DodoException("Delete commands needs to be followed by single task number.\n" +
+                    "e.g. delete 2");
+        }
+    }
+
+
     public static void deadlineCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2)  {
             throw new DodoException("Deadline commands needs to be structured as follows:\n" +
@@ -93,7 +101,8 @@ public class Dodo {
                 case "todo": {
                     Task newTask = new Todo(nextLineArr[1]);
                     tasks.add(newTask);
-                    System.out.println("Added this to your list:\n" + newTask.toString());
+                    System.out.println("Added this to your list:\n" + newTask.toString() +
+                            "\nYou now have " + tasks.size() + " task(s).");
                     break;
                 }
                 case "deadline": {
@@ -106,7 +115,8 @@ public class Dodo {
                     }
                     Task newTask = new Deadline(details[0], details[1]);
                     tasks.add(newTask);
-                    System.out.println("Added this to your list:\n" + newTask.toString());
+                    System.out.println("Added this to your list:\n" + newTask.toString() +
+                            "\nYou now have " + tasks.size() + " task(s).");
                     break;
                 }
                 case "event": {
@@ -119,7 +129,8 @@ public class Dodo {
                     }
                     Task newTask = new Event(details[0], details[1], details[2]);
                     tasks.add(newTask);
-                    System.out.println("Added this to your list:\n" + newTask.toString());
+                    System.out.println("Added this to your list:\n" + newTask.toString() +
+                            "\nYou now have " + tasks.size() + " task(s).");
                     break;
                 }
                 case "mark": {
@@ -141,7 +152,7 @@ public class Dodo {
                     System.out.println("Marked as done:\n" + target.toString());
                     break;
                 }
-                case "unmark":{
+                case "unmark": {
                     try {
                         markCommandCheck(nextLineArr);
                         int targetNo = Integer.parseInt(nextLineArr[1]);
@@ -160,6 +171,25 @@ public class Dodo {
                     System.out.println("Marked as undone:\n" + target.toString());
                     break;
                 }
+                case "delete": {
+                    try {
+                        deleteCommandCheck(nextLineArr);
+                        int targetNo = Integer.parseInt(nextLineArr[1]);
+                        validTaskNumber(targetNo);
+                    } catch (DodoException ex) {
+                        System.out.println(ex.getMessage());
+                        break;
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Task number given was not a number");
+                        break;
+                    }
+                    int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
+                    Task target = tasks.get(targetNo);
+                    tasks.remove(targetNo);
+                    System.out.println("The following task has been destroyed:\n" + target.toString() +
+                            "\nYou now have " + tasks.size() + " task(s).");
+                    break;
+                }
                 default:
                     System.out.println("Huh?");
                     dodoheadCount++;
@@ -176,6 +206,7 @@ public class Dodo {
                 "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from 'start' to 'end'\n" +
                 "mark 'task number' -> marks corresponding task as done\n" +
                 "unmark 'task number' -> marks corresponding task as undone\n" +
+                "delete 'task number' -> removes corresponding task" +
                 "bye -> dododo");
     }
 

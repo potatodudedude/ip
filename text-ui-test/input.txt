@@ -1,24 +1,23 @@
-huh
+todo
+deadline
+event
+mark
+help
 list
 todo a
-deadline b /by today
-event c /from noon /to night
+deadline b /by 1
+event c /from 1 /to 2
+deadline /by
+event /from /to
 list
 mark 0
 mark 4
 unmark 0
 unmark 4
 mark 1
-mark 2
-mark 3
 mark 1
-mark 2
+unmark 1
+unmark 1
 mark 3
-unmark 1
-unmark 2
 unmark 3
-unmark 1
-unmark 2
-unmark 3
-list
 bye

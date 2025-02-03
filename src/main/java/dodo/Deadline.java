@@ -1,3 +1,5 @@
+package dodo;
+
 public class Deadline extends Task{
     protected String time;
 

@@ -1,3 +1,4 @@
+package dodo;
 public class DodoException extends Exception{
     public DodoException() {
         super();

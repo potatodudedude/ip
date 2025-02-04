@@ -1,11 +1,17 @@
+package dodo;
+
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected String time;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
     }
 
     public String getDescription() {
@@ -22,6 +28,10 @@ public class Task {
 
     public void markUndone() {
         this.isDone = false;
+    }
+
+    public String getStorageString() {
+        return "";
     }
 
     @Override

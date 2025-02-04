@@ -1,0 +1,3 @@
+T|T|A
+D|F|B|Today
+E|F|C|Noon|Night

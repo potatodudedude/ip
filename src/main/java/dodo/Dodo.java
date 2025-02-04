@@ -1,5 +1,8 @@
 package dodo;
-import java.io.*;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -299,7 +302,8 @@ public class Dodo {
                 "list -> lists all current tasks and their numbering\n" +
                 "todo 'name' -> adds a task called 'name'\n" +
                 "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n" +
-                "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from 'start' to 'end'\n" +
+                "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from " +
+                "'start' to 'end'\n" +
                 "mark 'task number' -> marks corresponding task as done\n" +
                 "unmark 'task number' -> marks corresponding task as undone\n" +
                 "delete 'task number' -> removes corresponding task" +

@@ -7,54 +7,9 @@
 
 Dododo do dododo do dododo.
 What is your command?
-Huh?
-Huh?
-Huh?
-Huh?
-You seem to be struggling. Type 'help' if you need to see the command list.
-You got it boss! Here you go:
-list -> lists all current tasks and their numbering
-todo 'name' -> adds a task called 'name'
-deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'
-event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from 'start' to 'end'
-mark 'task number' -> marks corresponding task as done
-unmark 'task number' -> marks corresponding task as undone
-delete 'task number' -> removes corresponding taskbye -> dododo
-You have no tasks. Yay!
 Added this to your list:
 [T][ ] a
-You now have 1 task(s).
-Added this to your list:
-[D][ ] b (by: 1)
-You now have 2 task(s).
-Added this to your list:
-[E][ ] c (from: 1 to: 2)
-You now have 3 task(s).
-Deadline commands needs to be structured as follows:
-deadline 'name' /by 'time'
-Event commands needs to be structured as follows:
-event 'name' /from 'start time' /to 'end time'
-Here are your tasks:
-1. [T][ ] a
-2. [D][ ] b (by: 1)
-3. [E][ ] c (from: 1 to: 2)
-Task number 0 doesn't exist dodohead!
-Task number 4 doesn't exist dodohead!
-Task number 0 doesn't exist dodohead!
-Task number 4 doesn't exist dodohead!
-Marked as done:
-[T][X] a
-Following task is already marked done:
-[T][X] a
-Marked as undone:
-[T][ ] a
-Following task is already marked undone:
-[T][ ] a
-Marked as done:
-[E][X] c (from: 1 to: 2)
-Marked as undone:
-[E][ ] c (from: 1 to: 2)
+You now have 4 task(s).
 The following task has been destroyed:
-[E][ ] c (from: 1 to: 2)
-You now have 2 task(s).
-K bye bye :)
+[T][ ] a
+You now have 3 task(s).

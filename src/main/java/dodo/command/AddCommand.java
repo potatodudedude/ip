@@ -19,6 +19,14 @@ public class AddCommand extends Command {
         this.contents = contents;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         Task newTask;

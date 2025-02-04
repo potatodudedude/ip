@@ -15,6 +15,10 @@ public class MarkCommand extends Command {
         this.contents = contents;
     }
 
+    public int getType() {
+        return type;
+    }
+
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         if (type == 0) { // mark

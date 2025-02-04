@@ -34,6 +34,7 @@ application {
 
 shadowJar {
     archiveBaseName = "dodo"
+    archiveFileName = 'dodo.jar'
     archiveClassifier = null
 }
 

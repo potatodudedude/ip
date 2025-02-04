@@ -1,7 +1,17 @@
 package dodo;
 
 
-import dodo.command.*;
+import dodo.command.AddCommand;
+import dodo.command.ByeCommand;
+import dodo.command.Command;
+import dodo.command.DeleteCommand;
+import dodo.command.DueCommand;
+import dodo.command.HelpCommand;
+import dodo.command.InvalidCommand;
+import dodo.command.ListCommand;
+import dodo.command.MarkCommand;
+
+
 
 public class Parse {
 
@@ -26,7 +36,7 @@ public class Parse {
         case "deadline":
             return new AddCommand(1, nextLineArr[1]);
         case "event":
-            return new AddCommand(2,  nextLineArr[1]);
+            return new AddCommand(2, nextLineArr[1]);
         case "mark":
             return new MarkCommand(0, nextLineArr);
         case "unmark":

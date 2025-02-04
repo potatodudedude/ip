@@ -1,6 +1,7 @@
 package dodo.command;
 
-import dodo.*;
+import dodo.Storage;
+import dodo.UI;
 import dodo.task.Task;
 import dodo.task.TaskList;
 import dodo.utilities.DodoCheck;

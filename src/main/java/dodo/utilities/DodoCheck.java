@@ -1,49 +1,50 @@
 package dodo.utilities;
 
+import java.time.LocalDateTime;
+
 import dodo.task.Task;
 import dodo.task.TaskList;
-import dodo.utilities.DodoException;
 
-import java.time.LocalDateTime;
+
 
 public class DodoCheck {
     public static void markCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
-            throw new DodoException("Mark/Unmark commands needs to be followed by single task number.\n" +
-                    "e.g. mark 2");
+            throw new DodoException("Mark/Unmark commands needs to be followed by single task number.\n"
+                    + "e.g. mark 2");
         }
     }
 
     public static void deleteCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
-            throw new DodoException("Delete commands needs to be followed by single task number.\n" +
-                    "e.g. delete 2");
+            throw new DodoException("Delete commands needs to be followed by single task number.\n"
+                    + "e.g. delete 2");
         }
     }
     public static void deadlineCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
-            throw new DodoException("Deadline commands needs to be structured as follows:\n" +
-                    "deadline 'name' /by 'time'\n" +
-                    "'time' must be in the format yyyy-mm-dd hh:ss");
+            throw new DodoException("Deadline commands needs to be structured as follows:\n"
+                    + "deadline 'name' /by 'time'\n"
+                    + "'time' must be in the format yyyy-mm-dd hh:ss");
         }
     }
 
     public static void eventCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 3) {
-            throw new DodoException("Event commands needs to be structured as follows:\n" +
-                    "event 'name' /from 'start time' /to 'end time'\n" +
-                    "'time' must be in the format yyyy-mm-dd hh:ss");
+            throw new DodoException("Event commands needs to be structured as follows:\n"
+                    + "event 'name' /from 'start time' /to 'end time'\n"
+                    + "'time' must be in the format yyyy-mm-dd hh:ss");
         }
     }
 
     public static void dueCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
-            throw new DodoException("Due commands needs to be structured as follows:\n" +
-                    "due yyyy-mm-dd");
+            throw new DodoException("Due commands needs to be structured as follows:\n"
+                    + "due yyyy-mm-dd");
         }
     }
 
-    public static int taskNumberParse(String line) throws DodoException{
+    public static int taskNumberParse(String line) throws DodoException {
         int result;
         try {
             result = Integer.parseInt(line);

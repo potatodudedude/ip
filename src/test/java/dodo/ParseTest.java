@@ -1,11 +1,19 @@
 package dodo;
 
-import dodo.command.*;
-import org.junit.jupiter.api.Test;
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
+import org.junit.jupiter.api.Test;
+
+import dodo.command.AddCommand;
+import dodo.command.ByeCommand;
+import dodo.command.Command;
+import dodo.command.DeleteCommand;
+import dodo.command.DueCommand;
+import dodo.command.HelpCommand;
+import dodo.command.InvalidCommand;
+import dodo.command.ListCommand;
+import dodo.command.MarkCommand;
 
 public class ParseTest {
 
@@ -32,10 +40,10 @@ public class ParseTest {
         Command c = Parse.parse("");
         Command d = Parse.parse("asdada");
         assertInstanceOf(InvalidCommand.class, c);
-        InvalidCommand temp = (InvalidCommand)c;
+        InvalidCommand temp = (InvalidCommand) c;
         assertEquals(temp.getType(), 0);
         assertInstanceOf(InvalidCommand.class, d);
-        temp = (InvalidCommand)d;
+        temp = (InvalidCommand) d;
         assertEquals(temp.getType(), 1);
     }
 

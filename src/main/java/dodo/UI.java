@@ -84,6 +84,11 @@ public class UI {
                 date.format(PRESENTATION_DF) + ":");
     }
 
+    public void updateFind(String line) {
+        System.out.println("Here are the tasks matching your description of: "
+                + line + ":");
+    }
+
     public void printTaskList(TaskList tasks) {
         tasks.taskPrinter();
     }

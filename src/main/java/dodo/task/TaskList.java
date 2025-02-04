@@ -53,4 +53,15 @@ public class TaskList {
         }
         return filteredList;
     }
+
+    public TaskList findByDescription(String line) {
+        TaskList filteredList = new TaskList();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.getDescription().contains(line)) {
+                filteredList.addTask(task);
+            }
+        }
+        return filteredList;
+    }
 }

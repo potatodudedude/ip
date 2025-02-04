@@ -35,6 +35,8 @@ public class Parse {
             return new DeleteCommand(nextLineArr);
         case "due":
             return new DueCommand(nextLineArr);
+        case "find":
+            return new FindCommand(nextLineArr);
         default:
             return new InvalidCommand(1);
         }

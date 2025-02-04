@@ -43,6 +43,12 @@ public class DodoCheck {
         }
     }
 
+    public static void findCommandCheck(String[] commands) throws DodoException {
+        if (commands.length != 2) {
+            throw new DodoException("Find commands needs to be followed by a search phrase/word!");
+        }
+    }
+
     public static int taskNumberParse(String line) throws DodoException{
         int result;
         try {
@@ -82,4 +88,5 @@ public class DodoCheck {
             throw new DodoException("This event ends before it begins! How can this be? :O");
         }
     }
+
 }

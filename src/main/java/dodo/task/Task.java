@@ -22,14 +22,17 @@ public class Task {
         return isDone;
     }
 
-    public void markDone() {
+    public void setDone() {
         this.isDone = true;
     }
 
-    public void markUndone() {
+    public void setUndone() {
         this.isDone = false;
     }
 
+    /**
+     * Returns a string that stores the data of this task for writing into storage.
+     */
     public String getStorageString() {
         return "";
     }

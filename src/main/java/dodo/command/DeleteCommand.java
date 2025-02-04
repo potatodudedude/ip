@@ -14,6 +14,14 @@ public class DeleteCommand extends Command {
         this.contents = contents;
     }
 
+    /**
+     * Checks that the parsed command line contents is valid, then retrieves the task number and removes it from tasks.
+     * Calls the UI to show deleted task.
+     *
+     * @param tasks TaskList for storing tasks.
+     * @param ui UI for printing messages.
+     * @param storage Storage to save data to.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;

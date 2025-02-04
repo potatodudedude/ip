@@ -16,6 +16,14 @@ public class InvalidCommand extends Command {
         return type;
     }
 
+    /**
+     * Uses type to determine if the command is empty or gibberish.
+     * Calls the UI to print the appropriate error message.
+     *
+     * @param tasks TaskList for storing tasks.
+     * @param ui UI for printing messages.
+     * @param storage Storage to save data to.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         switch(type) {

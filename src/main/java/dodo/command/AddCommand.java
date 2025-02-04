@@ -27,6 +27,14 @@ public class AddCommand extends Command {
         return contents;
     }
 
+    /**
+     * Determines type of Task, then splits the contents String to form the appropriate descriptions
+     * Calls the UI for appropriate prints.
+     *
+     * @param tasks TaskList for storing tasks.
+     * @param ui UI for printing messages.
+     * @param storage Storage to save data to.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         Task newTask;

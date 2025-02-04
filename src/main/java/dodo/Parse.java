@@ -5,6 +5,12 @@ import dodo.command.*;
 
 public class Parse {
 
+    /**
+     * Takes in the user input and constructs and returns the appropriate command
+     *
+     * @param line command typed by the user.
+     * @return Command of specific type.
+     */
     public static Command parse(String line) {
         if (line.equals("bye") || line.equals("bb")) {
             return new ByeCommand();

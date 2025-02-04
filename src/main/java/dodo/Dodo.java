@@ -17,6 +17,11 @@ public class Dodo {
         this.ui = new UI();
     }
 
+    /**
+     * Executes the main running loop of Dodo
+     *
+     * @throws IOException
+     */
     private void run() throws IOException {
         storage.existenceCheck();
         try {
@@ -37,6 +42,12 @@ public class Dodo {
         }
     }
 
+    /**
+     * Initialises Dodo by specifying storage file path
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         new Dodo(new File("./data/storage.txt")).run();
     }

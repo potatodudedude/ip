@@ -17,6 +17,14 @@ public class DueCommand extends Command {
         this.contents = contents;
     }
 
+    /**
+     * Checks the parsed command line contents for validity, then calls TaskList to filter the tasks by date.
+     * Calls UI to print the filtered list.
+     *
+     * @param tasks TaskList for storing tasks.
+     * @param ui UI for printing messages.
+     * @param storage Storage to save data to.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         LocalDate date;

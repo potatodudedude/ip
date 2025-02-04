@@ -3,6 +3,10 @@ import java.io.File;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -10,43 +14,53 @@ public class Dodo {
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     private static File storage = new File(System.getProperty("user.dir") + "/data/storage.txt");
+    private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final static DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public static void markCommandCheck(String[] commands) throws DodoException {
+    private static void markCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
             throw new DodoException("Mark/Unmark commands needs to be followed by single task number.\n" +
                     "e.g. mark 2");
         }
     }
 
-    public static void deleteCommandCheck(String[] commands) throws DodoException {
+    private static void deleteCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
             throw new DodoException("Delete commands needs to be followed by single task number.\n" +
                     "e.g. delete 2");
         }
     }
 
-
-    public static void deadlineCommandCheck(String[] commands) throws DodoException {
+    private static void deadlineCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
             throw new DodoException("Deadline commands needs to be structured as follows:\n" +
-                    "deadline 'name' /by 'time'");
+                    "deadline 'name' /by 'time'\n" +
+                    "'time' must be in the format yyyy-mm-dd hh:ss");
         }
     }
 
-    public static void eventCommandCheck(String[] commands) throws DodoException {
+    private static void eventCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 3) {
             throw new DodoException("Event commands needs to be structured as follows:\n" +
-                    "event 'name' /from 'start time' /to 'end time'");
+                    "event 'name' /from 'start time' /to 'end time'\n" +
+                    "'time' must be in the format yyyy-mm-dd hh:ss");
         }
     }
 
-    public static void validTaskNumberCheck(int i) throws DodoException {
+    private static void dueCommandCheck(String[] commands) throws DodoException {
+        if (commands.length != 2) {
+            throw new DodoException("Due commands needs to be structured as follows:\n" +
+                    "due yyyy-mm-dd");
+        }
+    }
+
+    private static void validTaskNumberCheck(int i) throws DodoException {
         if (i > tasks.size() || i < 1) {
             throw new DodoException("Task number " + i + " doesn't exist dodohead!");
         }
     }
 
-    public static void redundantMarkCheck(int targetNo, boolean isDone) throws DodoException {
+    private static void redundantMarkCheck(int targetNo, boolean isDone) throws DodoException {
         Task target = tasks.get(targetNo - 1);
         if (isDone) {
             if (target.getMark()) {
@@ -87,24 +101,49 @@ public class Dodo {
             if (len != 4) {
                 throw new DodoException("Incorrect storage formatting");
             }
-            tasks.add(new Deadline(lineArr[2], lineArr[3], stringToBoolean(lineArr[1])));
+            tasks.add(new Deadline(lineArr[2], stringToLdt(lineArr[3]), stringToBoolean(lineArr[1])));
             break;
         case "E":
             if (len != 5) {
                 throw new DodoException("Incorrect storage formatting");
             }
-            tasks.add(new Event(lineArr[2], lineArr[3], lineArr[4], stringToBoolean(lineArr[1])));
+            tasks.add(new Event(lineArr[2], stringToLdt(lineArr[3]), stringToLdt(lineArr[4]),
+                    stringToBoolean(lineArr[1])));
             break;
         default:
             throw new DodoException("Incorrect storage formatting");
         }
     }
 
-    private static void writeStorage(String line) throws IOException {
-        BufferedWriter bW = new BufferedWriter(new FileWriter(storage, true));
-        bW.append(line);
-        bW.newLine();
-        bW.close();
+    private static LocalDateTime stringToLdt(String line) throws DodoException {
+        LocalDateTime ldt;
+        try {
+            ldt = LocalDateTime.parse(line, DTF);
+        } catch (DateTimeParseException ex) {
+            throw new DodoException("Incorrect formatting of time. Use: yyyy-mm-dd hh:ss");
+        }
+        return LocalDateTime.parse(line, DTF);
+    }
+
+    private static LocalDate stringToLd(String line) throws DodoException {
+        LocalDate ld;
+        try {
+            ld = LocalDate.parse(line, DF);
+        } catch (DateTimeParseException ex) {
+            throw new DodoException("Incorrect formatting of time. Use: yyyy-mm-dd");
+        }
+        return LocalDate.parse(line, DF);
+    }
+
+    private static void expiredTaskCheck(LocalDateTime time) throws DodoException {
+        if (time.isBefore(LocalDateTime.now())) {
+            throw new DodoException("This task is already expired... Oops :P");
+        }
+    }
+    private static void validEventTimeCheck(LocalDateTime start, LocalDateTime end) throws DodoException {
+        if (start.isAfter(end)) {
+            throw new DodoException("This event ends before it begins! How can this be? :O");
+        }
     }
 
     private static void updateStorage() throws IOException {
@@ -122,8 +161,14 @@ public class Dodo {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    private static void listPrinter(ArrayList list) {
+        for (int i = 0; i < list.size(); i++) {
+            int taskNo = i + 1;
+            System.out.println(taskNo + ". " + list.get(i).toString());
+        }
+    }
 
+    public static void main(String[] args) throws IOException {
         try {
             if (!storage.exists()) {
                 if (storage.getParentFile() != null) {
@@ -169,10 +214,7 @@ public class Dodo {
                     continue;
                 }
                 System.out.println("Here are your tasks:");
-                for (int i = 0; i < tasks.size(); i++) {
-                    int taskNo = i + 1;
-                    System.out.println(taskNo + ". " + tasks.get(i).toString());
-                }
+                listPrinter(tasks);
                 continue;
             } else if (nextLine.isEmpty()) {
                 dodoheadCount++;
@@ -200,13 +242,16 @@ public class Dodo {
             }
             case "deadline": {
                 String[] details = nextLineArr[1].split(" /by ", 2);
+                LocalDateTime time;
                 try {
                     deadlineCommandCheck(details);
+                    time = stringToLdt(details[1]);
+                    expiredTaskCheck(time);
                 } catch (DodoException ex) {
                     System.out.println(ex.getMessage());
                     break;
                 }
-                Task newTask = new Deadline(details[0], details[1]);
+                Task newTask = new Deadline(details[0], time);
                 tasks.add(newTask);
                 updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +
@@ -215,14 +260,19 @@ public class Dodo {
             }
             case "event": {
                 String[] details = nextLineArr[1].split(" \\/from | \\/to ", 3);
+                LocalDateTime start;
+                LocalDateTime end;
                 try {
                     eventCommandCheck(details);
+                    start = stringToLdt(details[1]);
+                    end = stringToLdt(details[2]);
+                    validEventTimeCheck(start, end);
+                    expiredTaskCheck(end);
                 } catch (DodoException ex) {
                     System.out.println(ex.getMessage());
                     break;
                 }
-
-                Task newTask = new Event(details[0], details[1], details[2]);
+                Task newTask = new Event(details[0], start, end);
                 tasks.add(newTask);
                 updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +
@@ -289,6 +339,32 @@ public class Dodo {
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;
             }
+            case "due": {
+                LocalDate date;
+                try {
+                    dueCommandCheck(nextLineArr);
+                    date = stringToLd(nextLineArr[1]);
+                } catch (DodoException ex) {
+                    System.out.println(ex.getMessage());
+                    break;
+                }
+                ArrayList<Task> filteredList = new ArrayList<Task>();
+                for (Task task : tasks) {
+                    if (task instanceof Deadline) {
+                        if (((Deadline) task).getTime().toLocalDate().isEqual(date)) {
+                            filteredList.add(task);
+                        }
+                    } else if (task instanceof Event) {
+                        if (((Event) task).getEnd().toLocalDate().isEqual(date)) {
+                            filteredList.add(task);
+                        }
+                    }
+                }
+                System.out.println("Here are the tasks due on " +
+                        date.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) + ":");
+                listPrinter(filteredList);
+            }
+            break;
             default:
                 System.out.println("Huh?");
                 dodoheadCount++;
@@ -301,6 +377,7 @@ public class Dodo {
         System.out.println("You got it boss! Here you go:\n" +
                 "list -> lists all current tasks and their numbering\n" +
                 "todo 'name' -> adds a task called 'name'\n" +
+                "commands that need 'time' must be in the yyyy-mm-dd hh:ss format" +
                 "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n" +
                 "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from " +
                 "'start' to 'end'\n" +

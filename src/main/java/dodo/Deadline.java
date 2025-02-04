@@ -1,28 +1,34 @@
 package dodo;
 
-public class Deadline extends Task{
-    protected String time;
+import java.time.LocalDateTime;
 
-    public Deadline(String description, String time) {
+public class Deadline extends Task{
+    protected LocalDateTime time;
+
+    public Deadline(String description, LocalDateTime time) {
         super(description);
         this.time = time;
     }
 
-    public Deadline(String description, String time, boolean isDone) {
+    public Deadline(String description, LocalDateTime time, boolean isDone) {
         super(description, isDone);
         this.time = time;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
     }
 
     @Override
     public String getStorageString() {
         if (this.isDone) {
-            return "D|T|" + super.description + "|" + time;
+            return "D|T|" + super.description + "|" + time.format(DTF);
         }
-        return "D|F|" + super.description + "|" + time;
+        return "D|F|" + super.description + "|" + time.format(DTF);
     }
 
     @Override
     public String toString(){
-        return "[D]" + super.toString() + " (by: " + time + ")";
+        return "[D]" + super.toString() + " (by: " + time.format(PRESENT_DTF) + ")";
     }
 }

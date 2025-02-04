@@ -61,7 +61,7 @@ public class Dodo {
                 + "| |__| | |__| | |__| | |__| |\n"
                 + "|_____/ \\____/|_____/ \\____/ \n";
         System.out.println(logo);
-        System.out.println("Dododo do dododo do dododo.\n" + "What is your command?");
+        System.out.println("Dododo do dododo do dododo.do\n" + "What is your command?");
         while (true) {
             if (dodoheadCount > 3) {
                 dodoheadCount = 0;

@@ -1,7 +1,5 @@
 package dodo;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -58,7 +56,7 @@ public class Dodo {
         }
     }
 
-    private static void readStorage(String line) throws DodoException{
+    private static void readStorage(String line) throws DodoException {
         String[] lineArr = line.split("\\|");
         switch (lineArr[0]) {
         case "T":
@@ -75,7 +73,15 @@ public class Dodo {
         }
     }
 
-    public static void main(String[] args) {
+    private static void writeStorage(String line) throws IOException {
+        BufferedWriter bW = new BufferedWriter(new FileWriter(storage, true));
+        bW.newLine();
+        bW.append(line);
+        bW.close();
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+
         try {
             if (!storage.exists()) {
                 if (storage.getParentFile() != null) {
@@ -86,12 +92,7 @@ public class Dodo {
         } catch(IOException ex) {
             System.out.println(ex.getMessage());
         }
-        Scanner storageScanner = new Scanner(System.in);
-        try {
-            storageScanner = new Scanner(storage);
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
+        Scanner storageScanner = new Scanner(storage);
         while (storageScanner.hasNextLine()) {
             try {
                 readStorage(storageScanner.nextLine());
@@ -148,6 +149,7 @@ public class Dodo {
             case "todo": {
                 Task newTask = new Todo(nextLineArr[1]);
                 tasks.add(newTask);
+                writeStorage("T|" + nextLineArr[1]);
                 System.out.println("Added this to your list:\n" + newTask.toString() +
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;
@@ -160,6 +162,7 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 }
+                writeStorage("D|" + details[0] + "|" + details[1] );
                 Task newTask = new Deadline(details[0], details[1]);
                 tasks.add(newTask);
                 System.out.println("Added this to your list:\n" + newTask.toString() +
@@ -174,6 +177,7 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 }
+                writeStorage("E|" + details[0] + "|" + details[1] + "|" + details[2]);
                 Task newTask = new Event(details[0], details[1], details[2]);
                 tasks.add(newTask);
                 System.out.println("Added this to your list:\n" + newTask.toString() +

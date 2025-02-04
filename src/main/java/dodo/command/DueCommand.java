@@ -1,8 +1,13 @@
-package dodo;
+package dodo.command;
+
+import dodo.*;
+import dodo.task.TaskList;
+import dodo.utilities.DodoCheck;
+import dodo.utilities.DodoException;
 
 import java.time.LocalDate;
 
-import static dodo.TimeStringUtility.stringToLd;
+import static dodo.utilities.TimeStringUtility.stringToLd;
 
 public class DueCommand extends Command {
     private String[] contents;

@@ -1,4 +1,8 @@
-package dodo;
+package dodo.command;
+
+import dodo.Storage;
+import dodo.task.TaskList;
+import dodo.UI;
 
 public class InvalidCommand extends Command {
     private int type;

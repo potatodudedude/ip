@@ -1,9 +1,15 @@
 package dodo;
 
+import dodo.task.Deadline;
+import dodo.task.Event;
+import dodo.task.TaskList;
+import dodo.task.Todo;
+import dodo.utilities.DodoException;
+
 import java.io.*;
 import java.util.Scanner;
 
-import static dodo.TimeStringUtility.stringToLdt;
+import static dodo.utilities.TimeStringUtility.stringToLdt;
 
 public class Storage {
     private File storage;

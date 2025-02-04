@@ -1,6 +1,8 @@
-package dodo;
+package dodo.task;
 
-public class Todo extends Task{
+import dodo.task.Task;
+
+public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }

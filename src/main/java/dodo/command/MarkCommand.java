@@ -1,4 +1,10 @@
-package dodo;
+package dodo.command;
+
+import dodo.*;
+import dodo.task.Task;
+import dodo.task.TaskList;
+import dodo.utilities.DodoCheck;
+import dodo.utilities.DodoException;
 
 public class MarkCommand extends Command {
     private int type;

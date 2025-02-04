@@ -1,9 +1,12 @@
 package dodo;
 
+import dodo.task.Task;
+import dodo.task.TaskList;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import static dodo.TimeStringUtility.PRESENTATION_DF;
+import static dodo.utilities.TimeStringUtility.PRESENTATION_DF;
 
 public class UI {
     private int dodoheadCount;

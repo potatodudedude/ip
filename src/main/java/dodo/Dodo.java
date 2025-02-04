@@ -1,4 +1,8 @@
 package dodo;
+import dodo.command.Command;
+import dodo.task.TaskList;
+import dodo.utilities.DodoException;
+
 import java.io.File;
 import java.io.IOException;
 

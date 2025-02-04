@@ -1,4 +1,8 @@
-package dodo;
+package dodo.utilities;
+
+import dodo.task.Task;
+import dodo.task.TaskList;
+import dodo.utilities.DodoException;
 
 import java.time.LocalDateTime;
 

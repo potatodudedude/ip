@@ -20,12 +20,12 @@ import dodo.utilities.DodoException;
 public class AddCommand extends Command {
     private int type;
 
-    private String contents;
+    private String[] contents;
 
     /**
      * Constructor that marks isExit as false.
      */
-    public AddCommand(int type, String contents) {
+    public AddCommand(int type, String[] contents) {
         super(false);
         this.type = type;
         this.contents = contents;
@@ -35,7 +35,7 @@ public class AddCommand extends Command {
         return type;
     }
 
-    public String getContents() {
+    public String[] getContents() {
         return contents;
     }
 
@@ -49,17 +49,24 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
+        try {
+            DodoCheck.addCommandCheck(contents);
+        } catch (DodoException ex) {
+            ui.printError(ex.getMessage());
+            return;
+        }
+        String timeDescriptor = contents[1];
         Task newTask;
         switch (type) {
         case 0: { // Todo
-            newTask = new Todo(contents);
+            newTask = new Todo(contents[1]);
             tasks.addTask(newTask);
             storage.update(tasks);
             ui.updateTaskList(tasks, newTask);
             break;
         }
         case 1: { // Deadline
-            String[] details = contents.split(" /by ", 2);
+            String[] details = timeDescriptor.split(" /by ", 2);
             LocalDateTime time;
             try {
                 DodoCheck.deadlineCommandCheck(details);
@@ -76,7 +83,7 @@ public class AddCommand extends Command {
             break;
         }
         case 2: { // Event
-            String[] details = contents.split(" \\/from | \\/to ", 3);
+            String[] details = timeDescriptor.split(" \\/from | \\/to ", 3);
             LocalDateTime start;
             LocalDateTime end;
             try {

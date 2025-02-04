@@ -53,7 +53,7 @@ public class ParseTest {
         assertInstanceOf(AddCommand.class, c);
         AddCommand temp = (AddCommand) c;
         assertEquals(temp.getType(), 0);
-        assertEquals(temp.getContents(), "a");
+        assertEquals(temp.getContents()[1], "a");
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ParseTest {
         assertInstanceOf(AddCommand.class, c);
         AddCommand temp = (AddCommand) c;
         assertEquals(temp.getType(), 1);
-        assertEquals(temp.getContents(), "abaa11");
+        assertEquals(temp.getContents()[1], "abaa11");
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ParseTest {
         assertInstanceOf(AddCommand.class, c);
         AddCommand temp = (AddCommand) c;
         assertEquals(temp.getType(), 2);
-        assertEquals(temp.getContents(), "chungagadg asas");
+        assertEquals(temp.getContents()[1], "chungagadg asas");
     }
 
     @Test

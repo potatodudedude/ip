@@ -1,19 +1,23 @@
 package dodo;
 
-import dodo.task.Task;
-import dodo.task.TaskList;
+import static dodo.utilities.TimeStringUtility.PRESENTATION_DF;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import static dodo.utilities.TimeStringUtility.PRESENTATION_DF;
+import dodo.task.Task;
+import dodo.task.TaskList;
 
 /**
  * Class for printing to the user and receiving inputs.
  */
 public class UI {
     private int dodoheadCount;
-    Scanner uiScanner;
+    private Scanner uiScanner;
+
+    /**
+     * Constructor initialising dodoheadCount to 0 and setting up the input scanner.
+     */
     public UI() {
         this.dodoheadCount = 0;
         this.uiScanner = new Scanner(System.in);
@@ -98,8 +102,8 @@ public class UI {
      * Prints text after adding tasks displaying the task added and the new total.
      */
     public void updateTaskList(TaskList tasks, Task newTask) {
-        System.out.println("Added this to your list:\n" + newTask.toString() +
-                "\nYou now have " + tasks.size() + " task(s).");
+        System.out.println("Added this to your list:\n" + newTask.toString()
+                + "\nYou now have " + tasks.size() + " task(s).");
     }
 
     /**
@@ -117,16 +121,23 @@ public class UI {
      * Prints text after deleting tasks displaying the task deleted and the new total.
      */
     public void updateDelete(TaskList tasks, Task target) {
-        System.out.println("The following task has been destroyed:\n" + target.toString() +
-                "\nYou now have " + tasks.size() + " task(s).");
+        System.out.println("The following task has been destroyed:\n" + target.toString()
+                + "\nYou now have " + tasks.size() + " task(s).");
     }
 
     /**
      * Prints the text preceding the list of tasks due on the input date.
      */
     public void updateDue(LocalDate date) {
-        System.out.println("Here are the tasks due on " +
-                date.format(PRESENTATION_DF) + ":");
+        System.out.println("Here are the tasks due on "
+                + date.format(PRESENTATION_DF) + ":");
+    }
+
+    /**
+     * Prints the text preceding the list of tasks matching the find command.
+     */
+    public void updateFind(String line) {
+        System.out.println("Here are the tasks matching your description of: " + line);
     }
 
     /**
@@ -144,19 +155,28 @@ public class UI {
     }
 
     /**
+     * Prints out message to convey a list is empty.
+     */
+    public void printEmptyList() {
+        System.out.println("Looks like there were none found. :v");
+    }
+
+    /**
      * Prints out a help list for commands.
      */
     public void report() {
-        System.out.println("You got it boss! Here you go:\n" +
-                "list -> lists all current tasks and their numbering\n" +
-                "todo 'name' -> adds a task called 'name'\n" +
-                "commands that need 'time' must be in the yyyy-mm-dd hh:ss format" +
-                "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n" +
-                "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from " +
-                "'start' to 'end'\n" +
-                "mark 'task number' -> marks corresponding task as done\n" +
-                "unmark 'task number' -> marks corresponding task as undone\n" +
-                "delete 'task number' -> removes corresponding task" +
-                "bye -> dododo");
+        System.out.println("You got it boss! Here you go:\n"
+                + "list -> lists all current tasks and their numbering\n"
+                + "todo 'name' -> adds a task called 'name'\n"
+                + "commands that need 'time' must be in the yyyy-mm-dd hh:ss format"
+                + "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n"
+                + "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from "
+                + "'start' to 'end'\n"
+                + "mark 'task number' -> marks corresponding task as done\n"
+                + "unmark 'task number' -> marks corresponding task as undone\n"
+                + "delete 'task number' -> removes corresponding task"
+                + "due 'yyyy-mm-dd' -> returns a list with the provided due date"
+                + "find 'description' -> returns a list with tasks that have the description in their name"
+                + "bye -> dododo");
     }
 }

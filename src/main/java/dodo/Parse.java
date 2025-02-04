@@ -1,17 +1,15 @@
 package dodo;
 
-
 import dodo.command.AddCommand;
 import dodo.command.ByeCommand;
 import dodo.command.Command;
 import dodo.command.DeleteCommand;
 import dodo.command.DueCommand;
+import dodo.command.FindCommand;
 import dodo.command.HelpCommand;
 import dodo.command.InvalidCommand;
 import dodo.command.ListCommand;
 import dodo.command.MarkCommand;
-
-
 
 /**
  * Class for translating the user input into actual commands.
@@ -36,16 +34,14 @@ public class Parse {
         }
 
         String[] nextLineArr = line.split("\\s", 2);
-        if (nextLineArr.length == 1) {
-            return new InvalidCommand(1);
-        }
+
         switch (nextLineArr[0]) {
         case "todo":
-            return new AddCommand(0, nextLineArr[1]);
+            return new AddCommand(0, nextLineArr);
         case "deadline":
-            return new AddCommand(1, nextLineArr[1]);
+            return new AddCommand(1, nextLineArr);
         case "event":
-            return new AddCommand(2, nextLineArr[1]);
+            return new AddCommand(2, nextLineArr);
         case "mark":
             return new MarkCommand(0, nextLineArr);
         case "unmark":
@@ -54,6 +50,8 @@ public class Parse {
             return new DeleteCommand(nextLineArr);
         case "due":
             return new DueCommand(nextLineArr);
+        case "find":
+            return new FindCommand(nextLineArr);
         default:
             return new InvalidCommand(1);
         }

@@ -1,10 +1,11 @@
 package dodo;
-import dodo.command.Command;
-import dodo.task.TaskList;
-import dodo.utilities.DodoException;
 
 import java.io.File;
 import java.io.IOException;
+
+import dodo.command.Command;
+import dodo.task.TaskList;
+import dodo.utilities.DodoException;
 
 /**
  * Class where the dodo chatbot initialises from.
@@ -15,6 +16,9 @@ public class Dodo {
     private Storage storage;
     private UI ui;
 
+    /**
+     * Constructor that initialises with specified storage poth.
+     */
     public Dodo(File storage) {
         this.storage = new Storage(storage);
         this.tasks = new TaskList();

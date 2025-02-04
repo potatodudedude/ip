@@ -45,7 +45,7 @@ public class TaskList {
     }
 
     /**
-     * Looks through the TaskList and rrturns a new TaskList filtered by matching expiry dates.
+     * Looks through the TaskList and returns a new TaskList filtered by matching expiry dates.
      */
     public TaskList findByDate(LocalDate date) {
         TaskList filteredList = new TaskList();
@@ -59,6 +59,20 @@ public class TaskList {
                 if (((Event) task).getEnd().toLocalDate().isEqual(date)) {
                     filteredList.addTask(task);
                 }
+            }
+        }
+        return filteredList;
+    }
+
+    /**
+     * Looks through the TaskList and returns a new TaskList filtered by descriptions superstring of the key string.
+     */
+    public TaskList findByDescription(String line) {
+        TaskList filteredList = new TaskList();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.getDescription().contains(line)) {
+                filteredList.addTask(task);
             }
         }
         return filteredList;

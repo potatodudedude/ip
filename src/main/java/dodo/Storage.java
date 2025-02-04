@@ -1,15 +1,19 @@
 package dodo;
 
+import static dodo.utilities.TimeStringUtility.stringToLdt;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 import dodo.task.Deadline;
 import dodo.task.Event;
 import dodo.task.TaskList;
 import dodo.task.Todo;
 import dodo.utilities.DodoException;
-
-import java.io.*;
-import java.util.Scanner;
-
-import static dodo.utilities.TimeStringUtility.stringToLdt;
 
 /**
  * Class for writing files to hard disc storage and for reading from the disc.
@@ -25,6 +29,9 @@ public class Storage {
         return storage;
     }
 
+    /**
+     * Checks if storage file and directory exists, if not, it is created.
+     */
     public void existenceCheck() {
         try {
             if (!storage.exists()) {
@@ -33,7 +40,7 @@ public class Storage {
                 }
                 storage.createNewFile();;
             }
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }

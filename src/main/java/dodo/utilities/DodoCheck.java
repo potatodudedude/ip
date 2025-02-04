@@ -8,9 +8,20 @@ import dodo.task.TaskList;
 
 
 /**
- * Group of methods to check for valid formatting/redudancy in user commands.
+ * Group of methods to check for valid formatting/redundancy in user commands.
  */
 public class DodoCheck {
+
+    /**
+     * Checks if parsed command line is appropriate length for its type(Marking).
+     *
+     * @throws DodoException If not appropriate.
+     */
+    public static void addCommandCheck(String[] commands) throws DodoException {
+        if (commands.length != 2) {
+            throw new DodoException("Adding task commands needs to be followed by a description.");
+        }
+    }
 
     /**
      * Checks if parsed command line is appropriate length for its type(Marking).
@@ -71,6 +82,17 @@ public class DodoCheck {
         if (commands.length != 2) {
             throw new DodoException("Due commands needs to be structured as follows:\n"
                     + "due yyyy-mm-dd");
+        }
+    }
+
+    /**
+     * Checks if parsed command line is appropriate length for its type(find).
+     *
+     * @throws DodoException If not appropriate.
+     */
+    public static void findCommandCheck(String[] commands) throws DodoException {
+        if (commands.length != 2) {
+            throw new DodoException("Find commands needs to be followed by a search phrase/word!");
         }
     }
 
@@ -142,4 +164,5 @@ public class DodoCheck {
             throw new DodoException("This event ends before it begins! How can this be? :O");
         }
     }
+
 }

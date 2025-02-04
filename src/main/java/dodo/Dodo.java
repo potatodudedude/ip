@@ -25,21 +25,21 @@ public class Dodo {
 
     public static void deadlineCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
-            throw new DodoException("dodo.Deadline commands needs to be structured as follows:\n" +
+            throw new DodoException("Deadline commands needs to be structured as follows:\n" +
                     "deadline 'name' /by 'time'");
         }
     }
 
     public static void eventCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 3) {
-            throw new DodoException("dodo.Event commands needs to be structured as follows:\n" +
+            throw new DodoException("Event commands needs to be structured as follows:\n" +
                     "event 'name' /from 'start time' /to 'end time'");
         }
     }
 
     public static void validTaskNumberCheck(int i) throws DodoException {
         if (i > tasks.size() || i < 1) {
-            throw new DodoException("dodo.Task number " + i + " doesn't exist dodohead!");
+            throw new DodoException("Task number " + i + " doesn't exist dodohead!");
         }
     }
 
@@ -56,27 +56,40 @@ public class Dodo {
         }
     }
 
-    private static boolean stringToBoolean(String line) {
+    private static boolean stringToBoolean(String line) throws DodoException {
         switch (line) {
         case "T":
             return true;
         case "F":
             return false;
         default:
-            return false;
+            throw new DodoException("Incorrect done marking formatting");
         }
     }
 
     private static void readStorage(String line) throws DodoException {
         String[] lineArr = line.split("\\|");
+        int len = lineArr.length;
+        if (len < 3 || len > 5) {
+            throw new DodoException("Incorrect storage formatting");
+        }
         switch (lineArr[0]) {
         case "T":
+            if (len != 3) {
+                throw new DodoException("Incorrect storage formatting");
+            }
             tasks.add(new Todo(lineArr[2], stringToBoolean(lineArr[1])));
             break;
         case "D":
+            if (len != 4) {
+                throw new DodoException("Incorrect storage formatting");
+            }
             tasks.add(new Deadline(lineArr[2], lineArr[3], stringToBoolean(lineArr[1])));
             break;
         case "E":
+            if (len != 5) {
+                throw new DodoException("Incorrect storage formatting");
+            }
             tasks.add(new Event(lineArr[2], lineArr[3], lineArr[4], stringToBoolean(lineArr[1])));
             break;
         default:
@@ -127,6 +140,7 @@ public class Dodo {
             }
         }
         storageScanner.close();
+        updateStorage();
         int dodoheadCount = 0;
         Scanner userInput = new Scanner(System.in);
         String logo = " _____   ____  _____   ____  \n"
@@ -222,7 +236,7 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 } catch (NumberFormatException ex) {
-                    System.out.println("dodo.Task number given was not a number");
+                    System.out.println("Task number given was not a number");
                     break;
                 }
                 int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
@@ -242,7 +256,7 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 } catch (NumberFormatException ex) {
-                    System.out.println("dodo.Task number given was not a number");
+                    System.out.println("Task number given was not a number");
                     break;
                 }
                 int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
@@ -261,7 +275,7 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 } catch (NumberFormatException ex) {
-                    System.out.println("dodo.Task number given was not a number");
+                    System.out.println("Task number given was not a number");
                     break;
                 }
                 int targetNo = Integer.parseInt(nextLineArr[1]) - 1;

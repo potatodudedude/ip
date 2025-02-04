@@ -1,82 +1,46 @@
 package dodo;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static dodo.TimeStringUtility.stringToLd;
+import static dodo.TimeStringUtility.stringToLdt;
+
 public class Parse {
-    public static void markCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Mark/Unmark commands needs to be followed by single task number.\n" +
-                    "e.g. mark 2");
-        }
-    }
 
-    public static void deleteCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Delete commands needs to be followed by single task number.\n" +
-                    "e.g. delete 2");
+    public static Command parse(String line) {
+        if (line.equals("bye") || line.equals("bb")) {
+            return new ByeCommand();
+        } else if (line.equals("list")) {
+            return new ListCommand();
+        } else if (line.isEmpty()) {
+            return new InvalidCommand(0);
+        } else if (line.equals("help")) {
+            return new HelpCommand();
         }
-    }
-    public static void deadlineCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Deadline commands needs to be structured as follows:\n" +
-                    "deadline 'name' /by 'time'\n" +
-                    "'time' must be in the format yyyy-mm-dd hh:ss");
-        }
-    }
 
-    public static void eventCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 3) {
-            throw new DodoException("Event commands needs to be structured as follows:\n" +
-                    "event 'name' /from 'start time' /to 'end time'\n" +
-                    "'time' must be in the format yyyy-mm-dd hh:ss");
+        String[] nextLineArr = line.split("\\s", 2);
+        if (nextLineArr.length == 1) {
+            return new InvalidCommand(1);
         }
-    }
-
-    public static void dueCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Due commands needs to be structured as follows:\n" +
-                    "due yyyy-mm-dd");
-        }
-    }
-
-    public static int taskNumberParse(String line) throws DodoException{
-        int result;
-        try {
-            result = Integer.parseInt(line);
-        } catch (NumberFormatException ex) {
-            throw new DodoException("Task number given was not a number");
-        }
-        return result;
-    }
-
-    public static void validTaskNumberCheck(int i, TaskList tasks) throws DodoException {
-        if (i > tasks.size() || i < 1) {
-            throw new DodoException("Task number " + i + " doesn't exist dodohead!");
-        }
-    }
-
-    public static void redundantMarkCheck(int targetNo, boolean isDone, TaskList tasks) throws DodoException {
-        Task target = tasks.get(targetNo - 1);
-        if (isDone) {
-            if (target.getMark()) {
-                throw new DodoException("Following task is already marked done:\n" + target.toString());
-            }
-        } else {
-            if (!target.getMark()) {
-                throw new DodoException("Following task is already marked undone:\n" + target.toString());
-            }
-        }
-    }
-
-    public static void expiredTaskCheck(LocalDateTime time) throws DodoException {
-        if (time.isBefore(LocalDateTime.now())) {
-            throw new DodoException("This task is already expired... Oops :P");
-        }
-    }
-    public static void validEventTimeCheck(LocalDateTime start, LocalDateTime end) throws DodoException {
-        if (start.isAfter(end)) {
-            throw new DodoException("This event ends before it begins! How can this be? :O");
+        switch (nextLineArr[0]) {
+        case "todo":
+            return new AddCommand(0, nextLineArr[1]);
+        case "deadline":
+            return new AddCommand(1, nextLineArr[1]);
+        case "event":
+            return new AddCommand(2,  nextLineArr[1]);
+        case "mark":
+            return new MarkCommand(0, nextLineArr);
+        case "unmark":
+            return new MarkCommand(1, nextLineArr);
+        case "delete":
+            return new DeleteCommand(nextLineArr);
+        case "due":
+            return new DueCommand(nextLineArr);
+        default:
+            return new InvalidCommand(1);
         }
     }
 }

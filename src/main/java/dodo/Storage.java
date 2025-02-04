@@ -1,11 +1,9 @@
 package dodo;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-import static dodo.TimeStringUtility.DTF;
+import static dodo.TimeStringUtility.stringToLdt;
 
 public class Storage {
     private File storage;
@@ -40,16 +38,6 @@ public class Storage {
         default:
             throw new DodoException("Incorrect done marking formatting");
         }
-    }
-
-    public LocalDateTime stringToLdt(String line) throws DodoException {
-        LocalDateTime ldt;
-        try {
-            ldt = LocalDateTime.parse(line, DTF);
-        } catch (DateTimeParseException ex) {
-            throw new DodoException("Incorrect formatting of time. Use: yyyy-mm-dd hh:ss");
-        }
-        return LocalDateTime.parse(line, DTF);
     }
 
     public void readTo(TaskList tasks) throws FileNotFoundException, DodoException {
@@ -93,13 +81,18 @@ public class Storage {
         storageScanner.close();
     }
 
-    public void update(TaskList tasks) throws IOException {
+    public void update(TaskList tasks) {
         File temp = new File(System.getProperty("user.dir") + "/data/temp.txt");
-        BufferedWriter sW = new BufferedWriter(new FileWriter(temp));
-        for (int i = 0; i < tasks.size(); i++) {
-            sW.write(tasks.get(i).getStorageString() + System.lineSeparator());
+        BufferedWriter sW;
+        try {
+            sW = new BufferedWriter(new FileWriter(temp));
+            for (int i = 0; i < tasks.size(); i++) {
+                sW.write(tasks.get(i).getStorageString() + System.lineSeparator());
+            }
+            sW.close();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-        sW.close();
         if (!storage.delete()) {
             System.out.println("Cannot delete file");
         }

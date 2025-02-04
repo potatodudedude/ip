@@ -11,6 +11,9 @@ import java.util.Scanner;
 
 import static dodo.utilities.TimeStringUtility.stringToLdt;
 
+/**
+ * Class for writing files to hard disc storage and for reading from the disc.
+ */
 public class Storage {
     private File storage;
 
@@ -35,6 +38,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Converts a string of "T" or "F" to its corresponding boolean.
+     *
+     * @throws DodoException Throws when input is not "T" or "F"
+     */
     private boolean stringToBoolean(String line) throws DodoException {
         switch (line) {
         case "T":
@@ -46,6 +54,14 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads the storage file and adds all the saved tasks to the parameter TaskList
+     * Converts the storage file lines into instructions, then creates and adds the Tasks
+     *
+     * @param tasks TaskList to be added to
+     * @throws FileNotFoundException
+     * @throws DodoException Throws when storage file format is not valid
+     */
     public void readTo(TaskList tasks) throws FileNotFoundException, DodoException {
         Scanner storageScanner = new Scanner(storage);
         while (storageScanner.hasNextLine()) {
@@ -87,6 +103,12 @@ public class Storage {
         storageScanner.close();
     }
 
+    /**
+     * Reads a given TaskList and writes to storage
+     * A new storage is file is created and the old one is deleted
+     *
+     * @param tasks
+     */
     public void update(TaskList tasks) {
         File temp = new File(System.getProperty("user.dir") + "/data/temp.txt");
         BufferedWriter sW;

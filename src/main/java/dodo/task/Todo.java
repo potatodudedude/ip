@@ -1,6 +1,10 @@
 package dodo.task;
 
+/**
+ * Simple Task subclass without time component.
+ */
 public class Todo extends Task {
+
     public Todo(String description) {
         super(description);
     }

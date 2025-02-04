@@ -7,9 +7,16 @@ import dodo.task.TaskList;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
 
+/**
+ * Command subclass that implements marking/unmarking tasks.
+ */
 public class MarkCommand extends Command {
     private int type;
     private String[] contents;
+
+    /**
+     * Constructor that marks isExit as false.
+     */
     public MarkCommand(int type, String[] contents) {
         super(false);
         this.type = type;
@@ -20,6 +27,15 @@ public class MarkCommand extends Command {
         return type;
     }
 
+    /**
+     * Checks for command line validity, then marks/unmarks the appropriate task
+     * Uses type to check mark/unmark.
+     * Parsed command line is given by the contents array.
+     *
+     * @param tasks TaskList for storing tasks.
+     * @param ui UI for printing messages.
+     * @param storage Storage to save data to.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         if (type == 0) { // mark
@@ -35,7 +51,7 @@ public class MarkCommand extends Command {
             }
             targetNo = Integer.parseInt(contents[1]) - 1;
             Task target = tasks.get(targetNo);
-            target.markDone();
+            target.setDone();
             storage.update(tasks);
             ui.updateMark(target, true);
         } else if (type == 1) { // unmark
@@ -51,7 +67,7 @@ public class MarkCommand extends Command {
             }
             targetNo = Integer.parseInt(contents[1]) - 1;
             Task target = tasks.get(targetNo);
-            target.markUndone();
+            target.setUndone();
             storage.update(tasks);
             ui.updateMark(target, false);
         }

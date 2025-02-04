@@ -3,6 +3,10 @@ package dodo.task;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Class that contains an ArrayList for Task objects
+ * All methods for manipulating tasks are here.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
 
@@ -30,6 +34,9 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
+    /**
+     * Prints out the tasks in the TaskList.
+     */
     public void taskPrinter() {
         for (int i = 0; i < tasks.size(); i++) {
             int taskNo = i + 1;
@@ -37,6 +44,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Looks through the TaskList and rrturns a new TaskList filtered by matching expiry dates.
+     */
     public TaskList findByDate(LocalDate date) {
         TaskList filteredList = new TaskList();
         for (int i = 0; i < tasks.size(); i++) {

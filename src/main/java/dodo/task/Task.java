@@ -1,14 +1,26 @@
 package dodo.task;
 
+/**
+ * Task class to represent tasks.
+ * Contains name and completion status.
+ * Has its own toString() format.
+ * Has method for formatting lines to write to storage.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Constructor that marks task as not done by default.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * Constructor that marks task's isDone as indicated.
+     */
     public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;
@@ -22,14 +34,17 @@ public class Task {
         return isDone;
     }
 
-    public void markDone() {
+    public void setDone() {
         this.isDone = true;
     }
 
-    public void markUndone() {
+    public void setUndone() {
         this.isDone = false;
     }
 
+    /**
+     * Returns a string that stores the data of this task for writing into storage.
+     */
     public String getStorageString() {
         return "";
     }

@@ -14,10 +14,17 @@ import dodo.task.Todo;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
 
+/**
+ * Command subclass that implements adding Todo, Deadline, and Event tasks.
+ */
 public class AddCommand extends Command {
     private int type;
 
     private String contents;
+
+    /**
+     * Constructor that marks isExit as false.
+     */
     public AddCommand(int type, String contents) {
         super(false);
         this.type = type;
@@ -32,6 +39,14 @@ public class AddCommand extends Command {
         return contents;
     }
 
+    /**
+     * Determines type of Task, then splits the contents String to form the appropriate descriptions
+     * Calls the UI for appropriate prints.
+     *
+     * @param tasks TaskList for storing tasks.
+     * @param ui UI for printing messages.
+     * @param storage Storage to save data to.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         Task newTask;
@@ -80,6 +95,8 @@ public class AddCommand extends Command {
             ui.updateTaskList(tasks, newTask);
             break;
         }
+        default:
+            break;
         }
     }
 }

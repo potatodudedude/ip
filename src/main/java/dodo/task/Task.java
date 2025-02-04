@@ -1,5 +1,11 @@
 package dodo.task;
 
+/**
+ * Task class to represent tasks.
+ * Contains name and completion status.
+ * Has its own toString() format.
+ * Has method for formatting lines to write to storage.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;

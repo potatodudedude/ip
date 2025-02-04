@@ -9,6 +9,9 @@ import java.time.LocalDate;
 
 import static dodo.utilities.TimeStringUtility.stringToLd;
 
+/**
+ * Command subclass that implements finding tasks by matching expiry dates.
+ */
 public class DueCommand extends Command {
     private String[] contents;
 

@@ -4,6 +4,9 @@ import dodo.Storage;
 import dodo.task.TaskList;
 import dodo.UI;
 
+/**
+ * Command subclass that implements exiting.
+ */
 public class ByeCommand extends Command {
 
     public ByeCommand() {

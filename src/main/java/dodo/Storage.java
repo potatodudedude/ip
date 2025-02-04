@@ -11,6 +11,9 @@ import java.util.Scanner;
 
 import static dodo.utilities.TimeStringUtility.stringToLdt;
 
+/**
+ * Class for writing files to hard disc storage and for reading from the disc.
+ */
 public class Storage {
     private File storage;
 

@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import static dodo.utilities.TimeStringUtility.DTF;
 import static dodo.utilities.TimeStringUtility.PRESENTATION_DTF;
 
+/**
+ * Task subclass for tasks with a start and end time.
+ */
 public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;

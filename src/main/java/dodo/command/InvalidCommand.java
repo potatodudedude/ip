@@ -4,6 +4,9 @@ import dodo.Storage;
 import dodo.task.TaskList;
 import dodo.UI;
 
+/**
+ * Command subclass that implements handling the outermost layer of invalid user commands.
+ */
 public class InvalidCommand extends Command {
     private int type;
 

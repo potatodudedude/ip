@@ -4,6 +4,9 @@ import dodo.Storage;
 import dodo.task.TaskList;
 import dodo.UI;
 
+/**
+ * Command subclass that implements listing tasks.
+ */
 public class ListCommand extends Command {
 
     public ListCommand() {

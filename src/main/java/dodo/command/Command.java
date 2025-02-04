@@ -4,6 +4,10 @@ import dodo.Storage;
 import dodo.task.TaskList;
 import dodo.UI;
 
+/**
+ * Abstract class to represent possible commands.
+ * Has abstract method for executing.
+ */
 public abstract class Command {
     private boolean isExit;
 

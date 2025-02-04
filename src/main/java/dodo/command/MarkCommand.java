@@ -6,6 +6,9 @@ import dodo.task.TaskList;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
 
+/**
+ * Command subclass that implements marking/unmarking tasks.
+ */
 public class MarkCommand extends Command {
     private int type;
     private String[] contents;

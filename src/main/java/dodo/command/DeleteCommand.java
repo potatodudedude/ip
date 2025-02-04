@@ -7,6 +7,9 @@ import dodo.UI;
 import dodo.task.Task;
 import dodo.task.TaskList;
 
+/**
+ * Command subclass that implements deleting tasks.
+ */
 public class DeleteCommand extends Command {
     private String[] contents;
     public DeleteCommand(String[] contents) {

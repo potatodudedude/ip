@@ -6,6 +6,9 @@ import dodo.utilities.DodoException;
 
 import java.time.LocalDateTime;
 
+/**
+ * Group of methods to check for valid formatting/redudancy in user commands.
+ */
 public class DodoCheck {
 
     /**

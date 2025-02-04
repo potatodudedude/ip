@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 
 import static dodo.utilities.TimeStringUtility.stringToLdt;
 
+/**
+ * Command subclass that implements adding Todo, Deadline, and Event tasks.
+ */
 public class AddCommand extends Command {
     private int type;
 

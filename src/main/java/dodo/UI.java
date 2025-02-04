@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 import static dodo.utilities.TimeStringUtility.PRESENTATION_DF;
 
+/**
+ * Class for printing to the user and receiving inputs.
+ */
 public class UI {
     private int dodoheadCount;
     Scanner uiScanner;

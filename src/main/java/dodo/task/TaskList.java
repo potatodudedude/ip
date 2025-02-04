@@ -3,6 +3,10 @@ package dodo.task;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Class that contains an ArrayList for Task objects
+ * All methods for manipulating tasks are here.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
 

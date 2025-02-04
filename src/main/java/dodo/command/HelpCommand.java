@@ -4,6 +4,9 @@ import dodo.Storage;
 import dodo.task.TaskList;
 import dodo.UI;
 
+/**
+ * Command subclass that implements helping.
+ */
 public class HelpCommand extends Command {
 
     public HelpCommand() {

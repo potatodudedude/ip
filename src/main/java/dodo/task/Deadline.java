@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import static dodo.utilities.TimeStringUtility.DTF;
 import static dodo.utilities.TimeStringUtility.PRESENTATION_DTF;
 
+/**
+ * Task subclass for tasks with a deadline.
+ */
 public class Deadline extends Task {
     protected LocalDateTime time;
 

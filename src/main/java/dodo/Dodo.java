@@ -6,6 +6,10 @@ import dodo.utilities.DodoException;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class where the dodo chatbot initialises from.
+ * Provides the base for the other class objects.
+ */
 public class Dodo {
     private TaskList tasks;
     private Storage storage;

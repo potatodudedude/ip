@@ -3,6 +3,9 @@ package dodo;
 
 import dodo.command.*;
 
+/**
+ * Class for translating the user input into actual commands.
+ */
 public class Parse {
 
     /**

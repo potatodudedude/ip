@@ -1,3 +1,2 @@
-T|A
-D|B|Today
-E|C|Noon|Night
+T|a
+T|b

@@ -11,6 +11,11 @@ public class Event extends Task{
     }
 
     @Override
+    public String getStorageString() {
+        return "E|" + super.description + "|" + start + "|" + end;
+    }
+
+    @Override
     public String toString(){
         return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
     }

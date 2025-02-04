@@ -107,7 +107,7 @@ public class Dodo {
         }
     }
 
-    private static LocalDateTime stringToLdt(String line) throws DodoException{
+    private static LocalDateTime stringToLdt(String line) throws DodoException {
         LocalDateTime ldt;
         try {
             ldt = LocalDateTime.parse(line, DTF);
@@ -115,6 +115,17 @@ public class Dodo {
             throw new DodoException("Incorrect formatting of time. Use: yyyy-mm-dd hh:ss");
         }
         return LocalDateTime.parse(line, DTF);
+    }
+
+    private static void expiredTaskCheck(LocalDateTime time) throws DodoException {
+        if (time.isBefore(LocalDateTime.now())) {
+            throw new DodoException("This task is already expired... Oops :P");
+        }
+    }
+    private static void validEventTimeCheck(LocalDateTime start, LocalDateTime end) throws DodoException {
+        if (start.isAfter(end)) {
+            throw new DodoException("This event ends before it begins! How can this be? :O");
+        }
     }
 
     private static void updateStorage() throws IOException {
@@ -210,14 +221,16 @@ public class Dodo {
             }
             case "deadline": {
                 String[] details = nextLineArr[1].split(" /by ", 2);
-                Task newTask;
+                LocalDateTime time;
                 try {
                     deadlineCommandCheck(details);
-                    newTask = new Deadline(details[0], stringToLdt(details[1]));
+                    time = stringToLdt(details[1]);
+                    expiredTaskCheck(time);
                 } catch (DodoException ex) {
                     System.out.println(ex.getMessage());
                     break;
                 }
+                Task newTask = new Deadline(details[0], time);
                 tasks.add(newTask);
                 updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +
@@ -226,14 +239,19 @@ public class Dodo {
             }
             case "event": {
                 String[] details = nextLineArr[1].split(" \\/from | \\/to ", 3);
-                Task newTask;
+                LocalDateTime start;
+                LocalDateTime end;
                 try {
                     eventCommandCheck(details);
-                    newTask = new Event(details[0], stringToLdt(details[1]), stringToLdt(details[2]));
+                    start = stringToLdt(details[1]);
+                    end = stringToLdt(details[2]);
+                    validEventTimeCheck(start, end);
+                    expiredTaskCheck(end);
                 } catch (DodoException ex) {
                     System.out.println(ex.getMessage());
                     break;
                 }
+                Task newTask = new Event(details[0], start, end);
                 tasks.add(newTask);
                 updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +

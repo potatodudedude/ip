@@ -1,17 +1,15 @@
 package dodo.utilities;
 
-import dodo.utilities.DodoException;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class TimeStringUtility {
-    public final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    public final static DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public final static DateTimeFormatter PRESENTATION_DTF = DateTimeFormatter.ofPattern("HH:mm dd-MMM-yyyy");
-    public final static DateTimeFormatter PRESENTATION_DF = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+    public static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final DateTimeFormatter PRESENTATION_DTF = DateTimeFormatter.ofPattern("HH:mm dd-MMM-yyyy");
+    public static final DateTimeFormatter PRESENTATION_DF = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
     public static LocalDateTime stringToLdt(String line) throws DodoException {
         LocalDateTime ldt;
         try {

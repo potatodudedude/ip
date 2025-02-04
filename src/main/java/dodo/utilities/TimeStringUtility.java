@@ -1,4 +1,6 @@
-package dodo;
+package dodo.utilities;
+
+import dodo.utilities.DodoException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

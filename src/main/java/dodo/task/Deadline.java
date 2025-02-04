@@ -1,11 +1,11 @@
-package dodo;
+package dodo.task;
 
 import java.time.LocalDateTime;
 
-import static dodo.TimeStringUtility.DTF;
-import static dodo.TimeStringUtility.PRESENTATION_DTF;
+import static dodo.utilities.TimeStringUtility.DTF;
+import static dodo.utilities.TimeStringUtility.PRESENTATION_DTF;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
     protected LocalDateTime time;
 
     public Deadline(String description, LocalDateTime time) {

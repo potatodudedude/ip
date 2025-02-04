@@ -1,4 +1,4 @@
-package dodo;
+package dodo.task;
 
 public class Task {
     protected String description;

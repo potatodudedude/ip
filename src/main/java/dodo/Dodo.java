@@ -3,17 +3,18 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 import static dodo.TimeStringUtility.stringToLdt;
 import static dodo.TimeStringUtility.stringToLd;
 
 public class Dodo {
-    private TaskList tasks = new TaskList();
+    private TaskList tasks;
     private Storage storage;
+    private UI ui;
 
     public Dodo(File storage) {
         this.storage = new Storage(storage);
+        this.tasks = new TaskList();
+        this.ui = new UI();
     }
 
     private void markCommandCheck(String[] commands) throws DodoException {
@@ -91,46 +92,34 @@ public class Dodo {
             System.out.println(ex.getMessage());
         }
         storage.update(tasks);
-        int dodoheadCount = 0;
-        Scanner userInput = new Scanner(System.in);
-        String logo = " _____   ____  _____   ____  \n"
-                + "|  __ \\ / __ \\|  __ \\ / __ \\ \n"
-                + "| |  | | |  | | |  | | |  | |\n"
-                + "| |  | | |  | | |  | | |  | |\n"
-                + "| |__| | |__| | |__| | |__| |\n"
-                + "|_____/ \\____/|_____/ \\____/ \n";
-        System.out.println(logo);
-        System.out.println("Dododo do dododo do dododo.\n" + "What is your command?");
+        ui.intro();
         while (true) {
-            if (dodoheadCount > 3) {
-                dodoheadCount = 0;
-                System.out.println("You seem to be struggling. Type 'help' if you need to see the command list.");
-            }
-            String nextLine = userInput.nextLine();
+            ui.dodoCheck();
+            String nextLine = ui.readInput();
             if (nextLine.equals("bye") || nextLine.equals("bb")) {
-                System.out.println("K bye bye :)");
+                ui.bye();
                 break;
             } else if (nextLine.equals("list")) {
                 if (tasks.isEmpty()) {
-                    System.out.println("You have no tasks. Yay!");
+                    ui.noTask();
                     continue;
                 }
-                System.out.println("Here are your tasks:");
-                tasks.taskPrinter();
+                ui.taskHeader();
+                ui.printTaskList(tasks);
                 continue;
             } else if (nextLine.isEmpty()) {
-                dodoheadCount++;
-                System.out.println("You've gotta enter a command first dodo head!");
+                ui.dodoHead();
+                ui.emptyCommand();
                 continue;
             } else if (nextLine.equals("help")) {
-                report();
+                ui.report();
                 continue;
             }
 
             String[] nextLineArr = nextLine.split("\\s", 2);
             if (nextLineArr.length == 1) {
-                dodoheadCount++;
-                System.out.println("Huh?");
+                ui.dodoHead();
+                ui.invalidCommand();
                 continue;
             }
             switch (nextLineArr[0]) {
@@ -138,8 +127,7 @@ public class Dodo {
                 Task newTask = new Todo(nextLineArr[1]);
                 tasks.addTask(newTask);
                 storage.update(tasks);
-                System.out.println("Added this to your list:\n" + newTask.toString() +
-                        "\nYou now have " + tasks.size() + " task(s).");
+                ui.updateTaskList(tasks, newTask);
                 break;
             }
             case "deadline": {
@@ -156,8 +144,7 @@ public class Dodo {
                 Task newTask = new Deadline(details[0], time);
                 tasks.addTask(newTask);
                 storage.update(tasks);
-                System.out.println("Added this to your list:\n" + newTask.toString() +
-                        "\nYou now have " + tasks.size() + " task(s).");
+                ui.updateTaskList(tasks, newTask);
                 break;
             }
             case "event": {
@@ -177,8 +164,7 @@ public class Dodo {
                 Task newTask = new Event(details[0], start, end);
                 tasks.addTask(newTask);
                 storage.update(tasks);
-                System.out.println("Added this to your list:\n" + newTask.toString() +
-                        "\nYou now have " + tasks.size() + " task(s).");
+                ui.updateTaskList(tasks, newTask);
                 break;
             }
             case "mark": {
@@ -198,7 +184,7 @@ public class Dodo {
                 Task target = tasks.get(targetNo);
                 target.markDone();
                 storage.update(tasks);
-                System.out.println("Marked as done:\n" + target.toString());
+                ui.updateMark(target, true);
                 break;
             }
             case "unmark": {
@@ -218,7 +204,7 @@ public class Dodo {
                 Task target = tasks.get(targetNo);
                 target.markUndone();
                 storage.update(tasks);
-                System.out.println("Marked as undone:\n" + target.toString());
+                ui.updateMark(target, false);
                 break;
             }
             case "delete": {
@@ -237,8 +223,7 @@ public class Dodo {
                 Task target = tasks.get(targetNo);
                 tasks.removeTask(targetNo);
                 storage.update(tasks);
-                System.out.println("The following task has been destroyed:\n" + target.toString() +
-                        "\nYou now have " + tasks.size() + " task(s).");
+                ui.updateDelete(tasks, target);
                 break;
             }
             case "due": {
@@ -250,27 +235,14 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 }
-                TaskList filteredList = new TaskList();;
-                for (int i = 0; i < tasks.size(); i++) {
-                    Task task = tasks.get(i);
-                    if (task instanceof Deadline) {
-                        if (((Deadline) task).getTime().toLocalDate().isEqual(date)) {
-                            filteredList.addTask(task);
-                        }
-                    } else if (task instanceof Event) {
-                        if (((Event) task).getEnd().toLocalDate().isEqual(date)) {
-                            filteredList.addTask(task);
-                        }
-                    }
-                }
-                System.out.println("Here are the tasks due on " +
-                        date.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) + ":");
-                filteredList.taskPrinter();
+                TaskList filteredList = tasks.findByDate(date);
+                ui.updateDue(date);
+                ui.printTaskList(filteredList);
             }
             break;
             default:
-                System.out.println("Huh?");
-                dodoheadCount++;
+                ui.invalidCommand();
+                ui.dodoHead();
                 break;
             }
         }
@@ -278,20 +250,6 @@ public class Dodo {
 
     public static void main(String[] args) throws IOException {
         new Dodo(new File(System.getProperty("user.dir") + "/data/storage.txt")).run();
-    }
-
-    private static void report() {
-        System.out.println("You got it boss! Here you go:\n" +
-                "list -> lists all current tasks and their numbering\n" +
-                "todo 'name' -> adds a task called 'name'\n" +
-                "commands that need 'time' must be in the yyyy-mm-dd hh:ss format" +
-                "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n" +
-                "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from " +
-                "'start' to 'end'\n" +
-                "mark 'task number' -> marks corresponding task as done\n" +
-                "unmark 'task number' -> marks corresponding task as undone\n" +
-                "delete 'task number' -> removes corresponding task" +
-                "bye -> dododo");
     }
 
 }

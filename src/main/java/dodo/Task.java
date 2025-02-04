@@ -6,8 +6,6 @@ import java.time.format.DateTimeFormatter;
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    protected final DateTimeFormatter PRESENT_DTF = DateTimeFormatter.ofPattern("HH:mm dd-MMM-yyyy");
 
     public Task(String description) {
         this.description = description;

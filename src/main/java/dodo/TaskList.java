@@ -1,5 +1,6 @@
 package dodo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -34,5 +35,22 @@ public class TaskList {
             int taskNo = i + 1;
             System.out.println(taskNo + ". " + tasks.get(i).toString());
         }
+    }
+
+    public TaskList findByDate(LocalDate date) {
+        TaskList filteredList = new TaskList();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task instanceof Deadline) {
+                if (((Deadline) task).getTime().toLocalDate().isEqual(date)) {
+                    filteredList.addTask(task);
+                }
+            } else if (task instanceof Event) {
+                if (((Event) task).getEnd().toLocalDate().isEqual(date)) {
+                    filteredList.addTask(task);
+                }
+            }
+        }
+        return filteredList;
     }
 }

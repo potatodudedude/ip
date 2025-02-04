@@ -8,6 +8,8 @@ import java.time.format.DateTimeParseException;
 public class TimeStringUtility {
     public final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     public final static DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public final static DateTimeFormatter PRESENTATION_DTF = DateTimeFormatter.ofPattern("HH:mm dd-MMM-yyyy");
+    public final static DateTimeFormatter PRESENTATION_DF = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
     public static LocalDateTime stringToLdt(String line) throws DodoException {
         LocalDateTime ldt;
         try {

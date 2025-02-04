@@ -59,32 +59,38 @@ public class Storage {
             String[] lineArr = line.split("\\|");
             int len = lineArr.length;
             if (len < 3 || len > 5) {
+                storageScanner.close();
                 throw new DodoException("Incorrect storage formatting");
             }
             switch (lineArr[0]) {
             case "T":
                 if (len != 3) {
+                    storageScanner.close();
                     throw new DodoException("Incorrect storage formatting");
                 }
                 tasks.addTask(new Todo(lineArr[2], stringToBoolean(lineArr[1])));
                 break;
             case "D":
                 if (len != 4) {
+                    storageScanner.close();
                     throw new DodoException("Incorrect storage formatting");
                 }
                 tasks.addTask(new Deadline(lineArr[2], stringToLdt(lineArr[3]), stringToBoolean(lineArr[1])));
                 break;
             case "E":
                 if (len != 5) {
+                    storageScanner.close();
                     throw new DodoException("Incorrect storage formatting");
                 }
                 tasks.addTask(new Event(lineArr[2], stringToLdt(lineArr[3]), stringToLdt(lineArr[4]),
                         stringToBoolean(lineArr[1])));
                 break;
             default:
+                storageScanner.close();
                 throw new DodoException("Incorrect storage formatting");
             }
         }
+        storageScanner.close();
     }
 
     public void update(TaskList tasks) throws IOException {

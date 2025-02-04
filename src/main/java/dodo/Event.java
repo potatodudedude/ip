@@ -18,6 +18,14 @@ public class Event extends Task{
         this.end = end;
     }
 
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
+
     @Override
     public String getStorageString() {
         if (this.isDone) {

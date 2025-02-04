@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,22 +15,23 @@ public class Dodo {
 
     private static File storage = new File(System.getProperty("user.dir") + "/data/storage.txt");
     private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    public static void markCommandCheck(String[] commands) throws DodoException {
+    private final static DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    private static void markCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
             throw new DodoException("Mark/Unmark commands needs to be followed by single task number.\n" +
                     "e.g. mark 2");
         }
     }
 
-    public static void deleteCommandCheck(String[] commands) throws DodoException {
+    private static void deleteCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
             throw new DodoException("Delete commands needs to be followed by single task number.\n" +
                     "e.g. delete 2");
         }
     }
 
-
-    public static void deadlineCommandCheck(String[] commands) throws DodoException {
+    private static void deadlineCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 2) {
             throw new DodoException("Deadline commands needs to be structured as follows:\n" +
                     "deadline 'name' /by 'time'\n" +
@@ -38,7 +39,7 @@ public class Dodo {
         }
     }
 
-    public static void eventCommandCheck(String[] commands) throws DodoException {
+    private static void eventCommandCheck(String[] commands) throws DodoException {
         if (commands.length != 3) {
             throw new DodoException("Event commands needs to be structured as follows:\n" +
                     "event 'name' /from 'start time' /to 'end time'\n" +
@@ -46,13 +47,20 @@ public class Dodo {
         }
     }
 
-    public static void validTaskNumberCheck(int i) throws DodoException {
+    private static void dueCommandCheck(String[] commands) throws DodoException {
+        if (commands.length != 2) {
+            throw new DodoException("Due commands needs to be structured as follows:\n" +
+                    "due yyyy-mm-dd");
+        }
+    }
+
+    private static void validTaskNumberCheck(int i) throws DodoException {
         if (i > tasks.size() || i < 1) {
             throw new DodoException("Task number " + i + " doesn't exist dodohead!");
         }
     }
 
-    public static void redundantMarkCheck(int targetNo, boolean isDone) throws DodoException {
+    private static void redundantMarkCheck(int targetNo, boolean isDone) throws DodoException {
         Task target = tasks.get(targetNo - 1);
         if (isDone) {
             if (target.getMark()) {
@@ -117,6 +125,16 @@ public class Dodo {
         return LocalDateTime.parse(line, DTF);
     }
 
+    private static LocalDate stringToLd(String line) throws DodoException {
+        LocalDate ld;
+        try {
+            ld = LocalDate.parse(line, DF);
+        } catch (DateTimeParseException ex) {
+            throw new DodoException("Incorrect formatting of time. Use: yyyy-mm-dd");
+        }
+        return LocalDate.parse(line, DF);
+    }
+
     private static void expiredTaskCheck(LocalDateTime time) throws DodoException {
         if (time.isBefore(LocalDateTime.now())) {
             throw new DodoException("This task is already expired... Oops :P");
@@ -151,7 +169,6 @@ public class Dodo {
     }
 
     public static void main(String[] args) throws IOException {
-
         try {
             if (!storage.exists()) {
                 if (storage.getParentFile() != null) {
@@ -322,6 +339,32 @@ public class Dodo {
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;
             }
+            case "due": {
+                LocalDate date;
+                try {
+                    dueCommandCheck(nextLineArr);
+                    date = stringToLd(nextLineArr[1]);
+                } catch (DodoException ex) {
+                    System.out.println(ex.getMessage());
+                    break;
+                }
+                ArrayList<Task> filteredList = new ArrayList<Task>();
+                for (Task task : tasks) {
+                    if (task instanceof Deadline) {
+                        if (((Deadline) task).getTime().toLocalDate().isEqual(date)) {
+                            filteredList.add(task);
+                        }
+                    } else if (task instanceof Event) {
+                        if (((Event) task).getEnd().toLocalDate().isEqual(date)) {
+                            filteredList.add(task);
+                        }
+                    }
+                }
+                System.out.println("Here are the tasks due on " +
+                        date.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) + ":");
+                listPrinter(filteredList);
+            }
+            break;
             default:
                 System.out.println("Huh?");
                 dodoheadCount++;

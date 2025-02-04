@@ -15,6 +15,10 @@ public class Deadline extends Task{
         this.time = time;
     }
 
+    public LocalDateTime getTime() {
+        return time;
+    }
+
     @Override
     public String getStorageString() {
         if (this.isDone) {

@@ -56,17 +56,28 @@ public class Dodo {
         }
     }
 
+    private static boolean stringToBoolean(String line) {
+        switch (line) {
+        case "T":
+            return true;
+        case "F":
+            return false;
+        default:
+            return false;
+        }
+    }
+
     private static void readStorage(String line) throws DodoException {
         String[] lineArr = line.split("\\|");
         switch (lineArr[0]) {
         case "T":
-            tasks.add(new Todo(lineArr[1]));
+            tasks.add(new Todo(lineArr[2], stringToBoolean(lineArr[1])));
             break;
         case "D":
-            tasks.add(new Deadline(lineArr[1], lineArr[2]));
+            tasks.add(new Deadline(lineArr[2], lineArr[3], stringToBoolean(lineArr[1])));
             break;
         case "E":
-            tasks.add(new Event(lineArr[1], lineArr[2], lineArr[3]));
+            tasks.add(new Event(lineArr[2], lineArr[3], lineArr[4], stringToBoolean(lineArr[1])));
             break;
         default:
             throw new DodoException("Incorrect storage formatting");
@@ -80,19 +91,12 @@ public class Dodo {
         bW.close();
     }
 
-    private static void deleteStorage(String line) throws IOException {
-        System.out.println(line);
+    private static void updateStorage() throws IOException {
         File temp = new File(System.getProperty("user.dir") + "/data/temp.txt");
-        BufferedReader sR = new BufferedReader(new FileReader(storage));
         BufferedWriter sW = new BufferedWriter(new FileWriter(temp));
-        String currLine;
-        while ((currLine = sR.readLine()) != null) {
-            if (currLine.equals(line)) {
-                continue;
-            }
-            sW.write(currLine + System.lineSeparator());
+        for (Task task : tasks) {
+            sW.write(task.getStorageString() + System.lineSeparator());
         }
-        sR.close();
         sW.close();
         if (!storage.delete()) {
             System.out.println("Cannot delete file");
@@ -100,10 +104,9 @@ public class Dodo {
         if (!temp.renameTo(storage)) {
             System.out.println("Cannot rename file");
         }
-
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws IOException {
 
         try {
             if (!storage.exists()) {
@@ -173,7 +176,7 @@ public class Dodo {
             case "todo": {
                 Task newTask = new Todo(nextLineArr[1]);
                 tasks.add(newTask);
-                writeStorage("T|" + nextLineArr[1]);
+                updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;
@@ -186,9 +189,9 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 }
-                writeStorage("D|" + details[0] + "|" + details[1] );
                 Task newTask = new Deadline(details[0], details[1]);
                 tasks.add(newTask);
+                updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;
@@ -201,9 +204,10 @@ public class Dodo {
                     System.out.println(ex.getMessage());
                     break;
                 }
-                writeStorage("E|" + details[0] + "|" + details[1] + "|" + details[2]);
+
                 Task newTask = new Event(details[0], details[1], details[2]);
                 tasks.add(newTask);
+                updateStorage();
                 System.out.println("Added this to your list:\n" + newTask.toString() +
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;
@@ -224,6 +228,7 @@ public class Dodo {
                 int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
                 Task target = tasks.get(targetNo);
                 target.markDone();
+                updateStorage();
                 System.out.println("Marked as done:\n" + target.toString());
                 break;
             }
@@ -243,6 +248,7 @@ public class Dodo {
                 int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
                 Task target = tasks.get(targetNo);
                 target.markUndone();
+                updateStorage();
                 System.out.println("Marked as undone:\n" + target.toString());
                 break;
             }
@@ -260,8 +266,8 @@ public class Dodo {
                 }
                 int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
                 Task target = tasks.get(targetNo);
-                deleteStorage(target.getStorageString());
                 tasks.remove(targetNo);
+                updateStorage();
                 System.out.println("The following task has been destroyed:\n" + target.toString() +
                         "\nYou now have " + tasks.size() + " task(s).");
                 break;

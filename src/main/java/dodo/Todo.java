@@ -5,9 +5,16 @@ public class Todo extends Task{
         super(description);
     }
 
+    public Todo(String description, boolean isDone) {
+        super(description, isDone);
+    }
+
     @Override
     public String getStorageString() {
-        return "T|" + super.description;
+        if (this.isDone) {
+            return "T|T|" + super.description;
+        }
+        return "T|F|" + super.description;
     }
 
     @Override

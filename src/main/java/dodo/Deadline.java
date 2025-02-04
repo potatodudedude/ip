@@ -8,9 +8,17 @@ public class Deadline extends Task{
         this.time = time;
     }
 
+    public Deadline(String description, String time, boolean isDone) {
+        super(description, isDone);
+        this.time = time;
+    }
+
     @Override
     public String getStorageString() {
-        return "D|" + super.description + "|" + time;
+        if (this.isDone) {
+            return "D|T|" + super.description + "|" + time;
+        }
+        return "D|F|" + super.description + "|" + time;
     }
 
     @Override

@@ -10,9 +10,18 @@ public class Event extends Task{
         this.end = end;
     }
 
+    public Event(String description, String start, String end, boolean isDone) {
+        super(description, isDone);
+        this.start = start;
+        this.end = end;
+    }
+
     @Override
     public String getStorageString() {
-        return "E|" + super.description + "|" + start + "|" + end;
+        if (this.isDone) {
+            return "E|T|" + super.description + "|" + start + "|" + end;
+        }
+        return "E|F|" + super.description + "|" + start + "|" + end;
     }
 
     @Override

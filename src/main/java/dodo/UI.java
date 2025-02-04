@@ -85,6 +85,10 @@ public class UI {
     public void printTaskList(TaskList tasks) {
         tasks.taskPrinter();
     }
+
+    public void printError(String message) {
+        System.out.println("Uh oh! " + message);
+    }
     public void report() {
         System.out.println("You got it boss! Here you go:\n" +
                 "list -> lists all current tasks and their numbering\n" +

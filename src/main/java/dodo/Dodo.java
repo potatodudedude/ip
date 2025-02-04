@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import static dodo.TimeStringUtility.stringToLdt;
 import static dodo.TimeStringUtility.stringToLd;
 
@@ -17,78 +18,12 @@ public class Dodo {
         this.ui = new UI();
     }
 
-    private void markCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Mark/Unmark commands needs to be followed by single task number.\n" +
-                    "e.g. mark 2");
-        }
-    }
-
-    private void deleteCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Delete commands needs to be followed by single task number.\n" +
-                    "e.g. delete 2");
-        }
-    }
-
-    private void deadlineCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Deadline commands needs to be structured as follows:\n" +
-                    "deadline 'name' /by 'time'\n" +
-                    "'time' must be in the format yyyy-mm-dd hh:ss");
-        }
-    }
-
-    private void eventCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 3) {
-            throw new DodoException("Event commands needs to be structured as follows:\n" +
-                    "event 'name' /from 'start time' /to 'end time'\n" +
-                    "'time' must be in the format yyyy-mm-dd hh:ss");
-        }
-    }
-
-    private void dueCommandCheck(String[] commands) throws DodoException {
-        if (commands.length != 2) {
-            throw new DodoException("Due commands needs to be structured as follows:\n" +
-                    "due yyyy-mm-dd");
-        }
-    }
-
-    private void validTaskNumberCheck(int i) throws DodoException {
-        if (i > tasks.size() || i < 1) {
-            throw new DodoException("Task number " + i + " doesn't exist dodohead!");
-        }
-    }
-
-    private void redundantMarkCheck(int targetNo, boolean isDone) throws DodoException {
-        Task target = tasks.get(targetNo - 1);
-        if (isDone) {
-            if (target.getMark()) {
-                throw new DodoException("Following task is already marked done:\n" + target.toString());
-            }
-        } else {
-            if (!target.getMark()) {
-                throw new DodoException("Following task is already marked undone:\n" + target.toString());
-            }
-        }
-    }
-
-    private void expiredTaskCheck(LocalDateTime time) throws DodoException {
-        if (time.isBefore(LocalDateTime.now())) {
-            throw new DodoException("This task is already expired... Oops :P");
-        }
-    }
-    private void validEventTimeCheck(LocalDateTime start, LocalDateTime end) throws DodoException {
-        if (start.isAfter(end)) {
-            throw new DodoException("This event ends before it begins! How can this be? :O");
-        }
-    }
-
     private void run() throws IOException {
         storage.existenceCheck();
         try {
             storage.readTo(tasks);
         } catch (DodoException ex) {
+            ui.printError(ex.getMessage());
             System.out.println(ex.getMessage());
         }
         storage.update(tasks);
@@ -134,11 +69,11 @@ public class Dodo {
                 String[] details = nextLineArr[1].split(" /by ", 2);
                 LocalDateTime time;
                 try {
-                    deadlineCommandCheck(details);
+                    Parse.deadlineCommandCheck(details);
                     time = stringToLdt(details[1]);
-                    expiredTaskCheck(time);
+                    Parse.expiredTaskCheck(time);
                 } catch (DodoException ex) {
-                    System.out.println(ex.getMessage());
+                    ui.printError(ex.getMessage());
                     break;
                 }
                 Task newTask = new Deadline(details[0], time);
@@ -152,13 +87,13 @@ public class Dodo {
                 LocalDateTime start;
                 LocalDateTime end;
                 try {
-                    eventCommandCheck(details);
+                    Parse.eventCommandCheck(details);
                     start = stringToLdt(details[1]);
                     end = stringToLdt(details[2]);
-                    validEventTimeCheck(start, end);
-                    expiredTaskCheck(end);
+                    Parse.validEventTimeCheck(start, end);
+                    Parse.expiredTaskCheck(end);
                 } catch (DodoException ex) {
-                    System.out.println(ex.getMessage());
+                    ui.printError(ex.getMessage());
                     break;
                 }
                 Task newTask = new Event(details[0], start, end);
@@ -168,19 +103,17 @@ public class Dodo {
                 break;
             }
             case "mark": {
+                int targetNo;
                 try {
-                    markCommandCheck(nextLineArr);
-                    int targetNo = Integer.parseInt(nextLineArr[1]);
-                    validTaskNumberCheck(targetNo);
-                    redundantMarkCheck(targetNo, true);
+                    Parse.markCommandCheck(nextLineArr);
+                    targetNo = Parse.taskNumberParse(nextLineArr[1]);
+                    Parse.validTaskNumberCheck(targetNo, tasks);
+                    Parse.redundantMarkCheck(targetNo, true, tasks);
                 } catch (DodoException ex) {
-                    System.out.println(ex.getMessage());
-                    break;
-                } catch (NumberFormatException ex) {
-                    System.out.println("Task number given was not a number");
+                    ui.printError(ex.getMessage());
                     break;
                 }
-                int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
+                targetNo = Integer.parseInt(nextLineArr[1]) - 1;
                 Task target = tasks.get(targetNo);
                 target.markDone();
                 storage.update(tasks);
@@ -188,19 +121,17 @@ public class Dodo {
                 break;
             }
             case "unmark": {
+                int targetNo;
                 try {
-                    markCommandCheck(nextLineArr);
-                    int targetNo = Integer.parseInt(nextLineArr[1]);
-                    validTaskNumberCheck(targetNo);
-                    redundantMarkCheck(targetNo, false);
+                    Parse.markCommandCheck(nextLineArr);
+                    targetNo = Parse.taskNumberParse(nextLineArr[1]);
+                    Parse.validTaskNumberCheck(targetNo, tasks);
+                    Parse.redundantMarkCheck(targetNo, false, tasks);
                 } catch (DodoException ex) {
-                    System.out.println(ex.getMessage());
-                    break;
-                } catch (NumberFormatException ex) {
-                    System.out.println("Task number given was not a number");
+                    ui.printError(ex.getMessage());
                     break;
                 }
-                int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
+                targetNo = Integer.parseInt(nextLineArr[1]) - 1;
                 Task target = tasks.get(targetNo);
                 target.markUndone();
                 storage.update(tasks);
@@ -208,18 +139,16 @@ public class Dodo {
                 break;
             }
             case "delete": {
+                int targetNo;
                 try {
-                    deleteCommandCheck(nextLineArr);
-                    int targetNo = Integer.parseInt(nextLineArr[1]);
-                    validTaskNumberCheck(targetNo);
+                    Parse.deleteCommandCheck(nextLineArr);
+                    targetNo = Parse.taskNumberParse(nextLineArr[1]);
+                    Parse.validTaskNumberCheck(targetNo, tasks);
                 } catch (DodoException ex) {
-                    System.out.println(ex.getMessage());
-                    break;
-                } catch (NumberFormatException ex) {
-                    System.out.println("Task number given was not a number");
+                    ui.printError(ex.getMessage());
                     break;
                 }
-                int targetNo = Integer.parseInt(nextLineArr[1]) - 1;
+                targetNo = Integer.parseInt(nextLineArr[1]) - 1;
                 Task target = tasks.get(targetNo);
                 tasks.removeTask(targetNo);
                 storage.update(tasks);
@@ -229,10 +158,10 @@ public class Dodo {
             case "due": {
                 LocalDate date;
                 try {
-                    dueCommandCheck(nextLineArr);
+                    Parse.dueCommandCheck(nextLineArr);
                     date = stringToLd(nextLineArr[1]);
                 } catch (DodoException ex) {
-                    System.out.println(ex.getMessage());
+                    ui.printError(ex.getMessage());
                     break;
                 }
                 TaskList filteredList = tasks.findByDate(date);

@@ -38,7 +38,7 @@ public class Dodo {
     }
 
     public static void main(String[] args) throws IOException {
-        new Dodo(new File(System.getProperty("user.dir") + "/data/storage.txt")).run();
+        new Dodo(new File("./data/storage.txt")).run();
     }
 
 }

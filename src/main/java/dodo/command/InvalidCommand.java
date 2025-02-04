@@ -12,6 +12,10 @@ public class InvalidCommand extends Command {
         this.type = type;
     }
 
+    public int getType() {
+        return type;
+    }
+
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         switch(type) {

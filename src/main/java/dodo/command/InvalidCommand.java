@@ -1,8 +1,8 @@
 package dodo.command;
 
 import dodo.Storage;
-import dodo.task.TaskList;
 import dodo.UI;
+import dodo.task.TaskList;
 
 public class InvalidCommand extends Command {
     private int type;
@@ -26,6 +26,8 @@ public class InvalidCommand extends Command {
         case 1: // Unrecognised command
             ui.dodoHead();
             ui.invalidCommand();
+            break;
+        default:
             break;
         }
 

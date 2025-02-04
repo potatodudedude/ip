@@ -1,10 +1,9 @@
 package dodo.task;
 
-import java.time.LocalDateTime;
-
 import static dodo.utilities.TimeStringUtility.DTF;
 import static dodo.utilities.TimeStringUtility.PRESENTATION_DTF;
 
+import java.time.LocalDateTime;
 public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
@@ -38,8 +37,8 @@ public class Event extends Task {
     }
 
     @Override
-    public String toString(){
-        return "[E]" + super.toString() + " (from: " + start.format(PRESENTATION_DTF) + " to: " +
-                end.format(PRESENTATION_DTF) + ")";
+    public String toString() {
+        return "[E]" + super.toString() + " (from: " + start.format(PRESENTATION_DTF) + " to: "
+                + end.format(PRESENTATION_DTF) + ")";
     }
 }

@@ -1,8 +1,9 @@
 package dodo.command;
 
 import dodo.Storage;
-import dodo.task.TaskList;
 import dodo.UI;
+import dodo.task.TaskList;
+
 
 public class ByeCommand extends Command {
 

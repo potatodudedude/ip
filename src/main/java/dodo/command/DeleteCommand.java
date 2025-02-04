@@ -1,11 +1,11 @@
 package dodo.command;
 
-import dodo.utilities.DodoCheck;
-import dodo.utilities.DodoException;
 import dodo.Storage;
 import dodo.UI;
 import dodo.task.Task;
 import dodo.task.TaskList;
+import dodo.utilities.DodoCheck;
+import dodo.utilities.DodoException;
 
 public class DeleteCommand extends Command {
     private String[] contents;

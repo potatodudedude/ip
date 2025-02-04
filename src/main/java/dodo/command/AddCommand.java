@@ -1,13 +1,18 @@
 package dodo.command;
 
-import dodo.*;
-import dodo.task.*;
-import dodo.utilities.DodoCheck;
-import dodo.utilities.DodoException;
+import static dodo.utilities.TimeStringUtility.stringToLdt;
 
 import java.time.LocalDateTime;
 
-import static dodo.utilities.TimeStringUtility.stringToLdt;
+import dodo.Storage;
+import dodo.UI;
+import dodo.task.Deadline;
+import dodo.task.Event;
+import dodo.task.Task;
+import dodo.task.TaskList;
+import dodo.task.Todo;
+import dodo.utilities.DodoCheck;
+import dodo.utilities.DodoException;
 
 public class AddCommand extends Command {
     private int type;

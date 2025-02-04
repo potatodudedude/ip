@@ -1,11 +1,11 @@
 package dodo.utilities;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class TimeStringUtilityTest {
     @Test
@@ -14,6 +14,7 @@ public class TimeStringUtilityTest {
             assertEquals(TimeStringUtility.stringToLdt("2002-02-03"),
                     LocalDate.of(2002, 2, 3));
         } catch (DodoException ex) {
+            return;
         }
     }
 
@@ -46,6 +47,7 @@ public class TimeStringUtilityTest {
             assertEquals(TimeStringUtility.stringToLd("2002-02-03 12:55"),
                     LocalDateTime.of(2002, 2, 3, 12, 55));
         } catch (DodoException ex) {
+            return;
         }
     }
 

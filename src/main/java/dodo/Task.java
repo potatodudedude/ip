@@ -1,13 +1,8 @@
 package dodo;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    protected final DateTimeFormatter PRESENT_DTF = DateTimeFormatter.ofPattern("HH:mm dd-MMM-yyyy");
 
     public Task(String description) {
         this.description = description;
@@ -25,10 +20,6 @@ public class Task {
 
     public boolean getMark() {
         return isDone;
-    }
-
-    protected String ldtToString(LocalDateTime ldt) {
-        return ldt.getHour() + ldt.getMinute() + ldt.getDayOfMonth() + ldt.getMonth().toString() + ldt.getYear();
     }
 
     public void markDone() {

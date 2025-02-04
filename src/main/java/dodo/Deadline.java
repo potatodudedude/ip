@@ -2,6 +2,9 @@ package dodo;
 
 import java.time.LocalDateTime;
 
+import static dodo.TimeStringUtility.DTF;
+import static dodo.TimeStringUtility.PRESENTATION_DTF;
+
 public class Deadline extends Task{
     protected LocalDateTime time;
 
@@ -29,6 +32,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString(){
-        return "[D]" + super.toString() + " (by: " + time.format(PRESENT_DTF) + ")";
+        return "[D]" + super.toString() + " (by: " + time.format(PRESENTATION_DTF) + ")";
     }
 }

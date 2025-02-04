@@ -143,6 +143,13 @@ public class Dodo {
         }
     }
 
+    private static void listPrinter(ArrayList list) {
+        for (int i = 0; i < list.size(); i++) {
+            int taskNo = i + 1;
+            System.out.println(taskNo + ". " + list.get(i).toString());
+        }
+    }
+
     public static void main(String[] args) throws IOException {
 
         try {
@@ -190,10 +197,7 @@ public class Dodo {
                     continue;
                 }
                 System.out.println("Here are your tasks:");
-                for (int i = 0; i < tasks.size(); i++) {
-                    int taskNo = i + 1;
-                    System.out.println(taskNo + ". " + tasks.get(i).toString());
-                }
+                listPrinter(tasks);
                 continue;
             } else if (nextLine.isEmpty()) {
                 dodoheadCount++;

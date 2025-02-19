@@ -26,6 +26,15 @@ public class Dodo {
     }
 
     /**
+     * Overloaded constructor that initialises without parameters.
+     */
+    public Dodo() {
+        this.storage = new Storage(new File("./data/storage.txt"));
+        this.tasks = new TaskList();
+        this.ui = new UI();
+    }
+
+    /**
      * Executes the main running loop of Dodo
      *
      * @throws IOException
@@ -60,4 +69,10 @@ public class Dodo {
         new Dodo(new File("./data/storage.txt")).run();
     }
 
+    /**
+     * Generates a response for the user's chat message. Temporary for javafx testing
+     */
+    public String getResponse(String input) {
+        return "Dodo says: " + input;
+    }
 }

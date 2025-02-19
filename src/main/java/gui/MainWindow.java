@@ -41,6 +41,9 @@ public class MainWindow extends AnchorPane {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDodoDialog(dodo.getUi().getIntroMessage(), dodoImage)
+        );
     }
 
     /**

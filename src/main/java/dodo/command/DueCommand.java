@@ -33,21 +33,22 @@ public class DueCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         LocalDate date;
         try {
             DodoCheck.dueCommandCheck(contents);
             date = stringToLd(contents[1]);
         } catch (DodoException ex) {
-            ui.printError(ex.getMessage());
-            return;
+            return ui.addPrintErrorPrefix(ex.getMessage());
         }
         TaskList filteredList = tasks.findByDate(date);
-        ui.updateDue(date);
+        String result;
+        result = ui.addUpdateDuePrefix(date) + "\n";
         if (filteredList.isEmpty()) {
-            ui.printEmptyList();
+            result += ui.getEmptyListMessage();
         } else {
-            ui.printTaskList(filteredList);
+            result += ui.getTaskListMessage(filteredList);
         }
+        return result;
     }
 }

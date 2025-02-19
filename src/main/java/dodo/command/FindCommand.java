@@ -29,18 +29,20 @@ public class FindCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
             DodoCheck.findCommandCheck(contents);
         } catch (DodoException ex) {
-            ui.printError(ex.getMessage());
+            ui.addPrintErrorPrefix(ex.getMessage());
         }
         TaskList filteredList = tasks.findByDescription(contents[1]);
-        ui.updateFind(contents[1]);
+        String result;
+        result = ui.addUpdateFindPrefix(contents[1]) + "\n";
         if (filteredList.isEmpty()) {
-            ui.printEmptyList();
+            ui.getEmptyListMessage();
         } else {
-            ui.printTaskList(filteredList);
+            ui.getTaskListMessage(filteredList);
         }
+        return result;
     }
 }

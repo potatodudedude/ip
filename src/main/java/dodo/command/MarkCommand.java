@@ -37,7 +37,7 @@ public class MarkCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         if (type == 0) { // mark
             int targetNo;
             try {
@@ -46,14 +46,13 @@ public class MarkCommand extends Command {
                 DodoCheck.validTaskNumberCheck(targetNo, tasks);
                 DodoCheck.redundantMarkCheck(targetNo, true, tasks);
             } catch (DodoException ex) {
-                ui.printError(ex.getMessage());
-                return;
+                return ui.addPrintErrorPrefix(ex.getMessage());
             }
             targetNo = Integer.parseInt(contents[1]) - 1;
             Task target = tasks.get(targetNo);
             target.setDone();
             storage.update(tasks);
-            ui.updateMark(target, true);
+            return ui.getUpdateMarkMessage(target, true);
         } else if (type == 1) { // unmark
             int targetNo;
             try {
@@ -62,14 +61,14 @@ public class MarkCommand extends Command {
                 DodoCheck.validTaskNumberCheck(targetNo, tasks);
                 DodoCheck.redundantMarkCheck(targetNo, false, tasks);
             } catch (DodoException ex) {
-                ui.printError(ex.getMessage());
-                return;
+                return ui.addPrintErrorPrefix(ex.getMessage());
             }
             targetNo = Integer.parseInt(contents[1]) - 1;
             Task target = tasks.get(targetNo);
             target.setUndone();
             storage.update(tasks);
-            ui.updateMark(target, false);
+            return ui.getUpdateMarkMessage(target, false);
         }
+        return ui.getInvalidCommandMessage();
     }
 }

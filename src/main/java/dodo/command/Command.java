@@ -23,7 +23,7 @@ public abstract class Command {
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
      */
-    public abstract void execute(TaskList tasks, UI ui, Storage storage);
+    public abstract String execute(TaskList tasks, UI ui, Storage storage);
 
     public boolean isExit() {
         return isExit;

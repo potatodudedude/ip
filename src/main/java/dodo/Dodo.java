@@ -26,28 +26,27 @@ public class Dodo {
     }
 
     /**
+     * Overloaded constructor that initialises without parameters.
+     */
+    public Dodo() {
+        this.storage = new Storage(new File("./data/storage.txt"));
+        this.tasks = new TaskList();
+        this.ui = new UI();
+    }
+
+    /**
      * Executes the main running loop of Dodo
      *
      * @throws IOException
      */
-    private void run() throws IOException {
+    public void run() throws IOException {
         storage.existenceCheck();
         try {
             storage.readTo(tasks);
         } catch (DodoException ex) {
-            ui.printError(ex.getMessage());
             System.out.println(ex.getMessage());
         }
         storage.update(tasks);
-        ui.intro();
-        boolean isExit = false;
-        while (!isExit) {
-            ui.dodoCheck();
-            String nextLine = ui.readInput();
-            Command nextCommand = Parse.parse(nextLine);
-            nextCommand.execute(tasks, ui, storage);
-            isExit = nextCommand.isExit();
-        }
     }
 
     /**
@@ -60,4 +59,15 @@ public class Dodo {
         new Dodo(new File("./data/storage.txt")).run();
     }
 
+    /**
+     * Generates a response for the user's chat message. Temporary for javafx testing
+     */
+    public String getResponse(String input) {
+        Command nextCommand = Parse.parse(input);
+        return nextCommand.execute(tasks, ui, storage);
+    }
+
+    public UI getUi() {
+        return this.ui;
+    }
 }

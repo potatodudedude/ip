@@ -22,7 +22,7 @@ public class ByeCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
-        ui.bye();
+    public String execute(TaskList tasks, UI ui, Storage storage) {
+        return ui.getByeMessage();
     }
 }

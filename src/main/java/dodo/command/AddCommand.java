@@ -48,12 +48,11 @@ public class AddCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
             DodoCheck.addCommandCheck(contents);
         } catch (DodoException ex) {
-            ui.printError(ex.getMessage());
-            return;
+            return ui.addPrintErrorPrefix(ex.getMessage());
         }
         String timeDescriptor = contents[1];
         Task newTask;
@@ -62,8 +61,7 @@ public class AddCommand extends Command {
             newTask = new Todo(contents[1]);
             tasks.addTask(newTask);
             storage.update(tasks);
-            ui.updateTaskList(tasks, newTask);
-            break;
+            return ui.getUpdateTaskListMessage(tasks, newTask);
         }
         case 1: { // Deadline
             String[] details = timeDescriptor.split(" /by ", 2);
@@ -73,14 +71,12 @@ public class AddCommand extends Command {
                 time = stringToLdt(details[1]);
                 DodoCheck.expiredTaskCheck(time);
             } catch (DodoException ex) {
-                ui.printError(ex.getMessage());
-                break;
+                return ui.addPrintErrorPrefix(ex.getMessage());
             }
             newTask = new Deadline(details[0], time);
             tasks.addTask(newTask);
             storage.update(tasks);
-            ui.updateTaskList(tasks, newTask);
-            break;
+            return ui.getUpdateTaskListMessage(tasks, newTask);
         }
         case 2: { // Event
             String[] details = timeDescriptor.split(" \\/from | \\/to ", 3);
@@ -93,17 +89,15 @@ public class AddCommand extends Command {
                 DodoCheck.validEventTimeCheck(start, end);
                 DodoCheck.expiredTaskCheck(end);
             } catch (DodoException ex) {
-                ui.printError(ex.getMessage());
-                break;
+                return ui.addPrintErrorPrefix(ex.getMessage());
             }
             newTask = new Event(details[0], start, end);
             tasks.addTask(newTask);
             storage.update(tasks);
-            ui.updateTaskList(tasks, newTask);
-            break;
+            return ui.getUpdateTaskListMessage(tasks, newTask);
         }
         default:
-            break;
+            return ui.getInvalidCommandMessage();
         }
     }
 }

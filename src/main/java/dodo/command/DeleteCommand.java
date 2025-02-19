@@ -30,20 +30,19 @@ public class DeleteCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;
         try {
             DodoCheck.deleteCommandCheck(contents);
             targetNo = DodoCheck.taskNumberParse(contents[1]);
             DodoCheck.validTaskNumberCheck(targetNo, tasks);
         } catch (DodoException ex) {
-            ui.printError(ex.getMessage());
-            return;
+            return ui.addPrintErrorPrefix(ex.getMessage());
         }
         targetNo = Integer.parseInt(contents[1]) - 1;
         Task target = tasks.get(targetNo);
         tasks.removeTask(targetNo);
         storage.update(tasks);
-        ui.updateDelete(tasks, target);
+        return ui.getUpdateDeleteMessage(tasks, target);
     }
 }

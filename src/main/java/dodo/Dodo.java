@@ -44,7 +44,6 @@ public class Dodo {
         try {
             storage.readTo(tasks);
         } catch (DodoException ex) {
-            ui.addPrintErrorPrefix(ex.getMessage());
             System.out.println(ex.getMessage());
         }
         storage.update(tasks);

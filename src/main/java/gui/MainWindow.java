@@ -36,6 +36,11 @@ public class MainWindow extends AnchorPane {
     /** Injects the Duke instance */
     public void setDodo(Dodo d) {
         dodo = d;
+        try {
+            dodo.run();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**

@@ -39,24 +39,15 @@ public class Dodo {
      *
      * @throws IOException
      */
-    private void run() throws IOException {
+    public void run() throws IOException {
         storage.existenceCheck();
         try {
             storage.readTo(tasks);
         } catch (DodoException ex) {
-            ui.printError(ex.getMessage());
+            ui.addPrintErrorPrefix(ex.getMessage());
             System.out.println(ex.getMessage());
         }
         storage.update(tasks);
-        ui.intro();
-        boolean isExit = false;
-        while (!isExit) {
-            ui.dodoCheck();
-            String nextLine = ui.readInput();
-            Command nextCommand = Parse.parse(nextLine);
-            nextCommand.execute(tasks, ui, storage);
-            isExit = nextCommand.isExit();
-        }
     }
 
     /**
@@ -73,6 +64,11 @@ public class Dodo {
      * Generates a response for the user's chat message. Temporary for javafx testing
      */
     public String getResponse(String input) {
-        return "Dodo says: " + input;
+        Command nextCommand = Parse.parse(input);
+        return nextCommand.execute(tasks, ui, storage);
+    }
+
+    public UI getUi() {
+        return this.ui;
     }
 }

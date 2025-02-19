@@ -3,6 +3,7 @@ package gui;
 import dodo.Dodo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -26,6 +27,7 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Wojak.jpeg"));
     private Image dodoImage = new Image(this.getClass().getResourceAsStream("/images/dodo.jpeg"));
 
+    /** Initialise gui elements */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -46,8 +48,10 @@ public class MainWindow extends AnchorPane {
         String response = dodo.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dodoImage)
+                DialogBox.getDodoDialog(response, dodoImage)
         );
         userInput.clear();
     }
+
+
 }

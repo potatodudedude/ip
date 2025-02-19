@@ -22,7 +22,7 @@ public class HelpCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
-        ui.report();
+    public String execute(TaskList tasks, UI ui, Storage storage) {
+        return ui.getHelpMessage();
     }
 }

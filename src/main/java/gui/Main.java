@@ -22,7 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDodo(dodo);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setDodo(dodo); // inject the Dodo instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

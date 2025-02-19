@@ -31,18 +31,14 @@ public class InvalidCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         switch(type) {
         case 0: // No command line
-            ui.dodoHead();
-            ui.emptyCommand();
-            break;
+            return ui.getEmptyCommandMessage();
         case 1: // Unrecognised command
-            ui.dodoHead();
-            ui.invalidCommand();
-            break;
+            return ui.getInvalidCommandMessage();
         default:
-            break;
+            return ui.getEmptyCommandMessage();
         }
 
     }

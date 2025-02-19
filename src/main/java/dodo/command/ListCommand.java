@@ -21,12 +21,12 @@ public class ListCommand extends Command {
      * @param storage Storage to save data to.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) {
+    public String execute(TaskList tasks, UI ui, Storage storage) {
         if (tasks.isEmpty()) {
-            ui.noTask();
-            return;
+            return ui.getNoTaskMessage();
         }
-        ui.taskHeader();
-        ui.printTaskList(tasks);
+        String result = ui.getTaskHeaderMessage() + "\n";
+        result += ui.getTaskListMessage(tasks);
+        return result;
     }
 }

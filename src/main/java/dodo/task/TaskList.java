@@ -35,13 +35,15 @@ public class TaskList {
     }
 
     /**
-     * Prints out the tasks in the TaskList.
+     * Returns the tasks in the TaskList.
      */
-    public void taskPrinter() {
+    public String taskPrinter() {
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             int taskNo = i + 1;
-            System.out.println(taskNo + ". " + tasks.get(i).toString());
+            result.append(taskNo).append(". ").append(tasks.get(i).toString()).append("\n");
         }
+        return result.toString();
     }
 
     /**

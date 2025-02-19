@@ -1,9 +1,9 @@
 package gui;
 
 import dodo.Dodo;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -59,6 +59,10 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDodoDialog(response, dodoImage)
         );
         userInput.clear();
+        if (response.equals(dodo.getUi().getByeMessage())) {
+            Platform.exit();
+            System.exit(0);
+        }
     }
 
 

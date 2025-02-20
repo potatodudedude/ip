@@ -130,6 +130,7 @@ public class AddCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
+        assert (0 <= type && type >= 2);
         try {
             DodoCheck.checkAddCommand(taskDescriptions);
         } catch (DodoException ex) {

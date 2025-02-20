@@ -55,11 +55,11 @@ public class MarkCommand extends Command {
         Task target = tasks.get(targetNo);
         if (isMark) {
             target.setDone();
-            storage.update(tasks);
+            storage.updateTaskListFromStorage(tasks);
             return ui.getUpdateMarkMessage(target, true);
         } else {
             target.setUndone();
-            storage.update(tasks);
+            storage.updateTaskListFromStorage(tasks);
             return ui.getUpdateMarkMessage(target, false);
         }
     }

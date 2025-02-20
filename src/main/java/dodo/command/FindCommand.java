@@ -16,7 +16,6 @@ public class FindCommand extends Command {
      * Constructor that marks isExit as false.
      */
     public FindCommand(String[] contents) {
-        super(false);
         this.contents = contents;
     }
 
@@ -27,6 +26,7 @@ public class FindCommand extends Command {
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {

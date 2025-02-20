@@ -11,64 +11,56 @@ import dodo.utilities.DodoException;
  * Command subclass that implements marking/unmarking tasks.
  */
 public class MarkCommand extends Command {
-    private int type;
-    private String[] contents;
+    private boolean isMark;
+    private String[] taskNumberString;
 
     /**
      * Constructor that marks isExit as false.
      */
-    public MarkCommand(int type, String[] contents) {
-        super(false);
-        this.type = type;
-        this.contents = contents;
+    public MarkCommand(boolean isMark, String[] taskNumberString) {
+        this.isMark = isMark;
+        this.taskNumberString = taskNumberString;
     }
 
-    public int getType() {
-        return type;
+    public boolean getIsMark() {
+        return isMark;
     }
 
     /**
-     * Checks for command line validity, then marks/unmarks the appropriate task
+     * Checks for command line validity, then marks/unmarks the appropriate task and returns the marked message.
      * Uses type to check mark/unmark.
      * Parsed command line is given by the contents array.
      *
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
-        if (type == 0) { // mark
-            int targetNo;
-            try {
-                DodoCheck.markCommandCheck(contents);
-                targetNo = DodoCheck.taskNumberParse(contents[1]);
-                DodoCheck.validTaskNumberCheck(targetNo, tasks);
+        int targetNo;
+        try {
+            DodoCheck.markCommandCheck(taskNumberString);
+            targetNo = DodoCheck.taskNumberParse(taskNumberString[1]);
+            DodoCheck.validTaskNumberCheck(targetNo, tasks);
+            if (isMark) {
                 DodoCheck.redundantMarkCheck(targetNo, true, tasks);
-            } catch (DodoException ex) {
-                return ui.addPrintErrorPrefix(ex.getMessage());
+            } else {
+                DodoCheck.redundantMarkCheck(targetNo, false, tasks);
             }
-            targetNo = Integer.parseInt(contents[1]) - 1;
-            Task target = tasks.get(targetNo);
+        } catch (DodoException ex) {
+            return ui.addPrintErrorPrefix(ex.getMessage());
+        }
+        targetNo = Integer.parseInt(taskNumberString[1]) - 1;
+        Task target = tasks.get(targetNo);
+        if (isMark) {
             target.setDone();
             storage.update(tasks);
             return ui.getUpdateMarkMessage(target, true);
-        } else if (type == 1) { // unmark
-            int targetNo;
-            try {
-                DodoCheck.markCommandCheck(contents);
-                targetNo = DodoCheck.taskNumberParse(contents[1]);
-                DodoCheck.validTaskNumberCheck(targetNo, tasks);
-                DodoCheck.redundantMarkCheck(targetNo, false, tasks);
-            } catch (DodoException ex) {
-                return ui.addPrintErrorPrefix(ex.getMessage());
-            }
-            targetNo = Integer.parseInt(contents[1]) - 1;
-            Task target = tasks.get(targetNo);
+        } else {
             target.setUndone();
             storage.update(tasks);
             return ui.getUpdateMarkMessage(target, false);
         }
-        return ui.getInvalidCommandMessage();
     }
 }

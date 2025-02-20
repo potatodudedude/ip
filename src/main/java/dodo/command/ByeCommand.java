@@ -10,16 +10,13 @@ import dodo.task.TaskList;
  */
 public class ByeCommand extends Command {
 
-    public ByeCommand() {
-        super(true);
-    }
-
     /**
-     * Calls the UI to say bye.
+     * Calls the UI to return bye message.
      *
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {

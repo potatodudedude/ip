@@ -10,16 +10,13 @@ import dodo.task.TaskList;
  */
 public class HelpCommand extends Command {
 
-    public HelpCommand() {
-        super(false);
-    }
-
     /**
      * Calls UI to print the help list.
      *
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {

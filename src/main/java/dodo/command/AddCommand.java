@@ -30,16 +30,15 @@ public class AddCommand extends Command {
     private String[] taskDescriptions;
 
     /**
-     * Constructor that marks isExit as false.
+     * Constructor
      */
     public AddCommand(int taskType, String[] taskDescriptions) {
-        super(false);
         this.taskType = taskType;
         this.taskDescriptions = taskDescriptions;
     }
 
     public int getTaskType() {
-        return this.getTaskType();
+        return this.taskType;
     }
 
     public String[] getTaskDescriptions() {

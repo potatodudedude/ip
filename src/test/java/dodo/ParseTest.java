@@ -1,7 +1,9 @@
 package dodo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -79,7 +81,7 @@ public class ParseTest {
         Command c = Parse.parse("mark asasd");
         assertInstanceOf(MarkCommand.class, c);
         MarkCommand temp = (MarkCommand) c;
-        assertEquals(temp.getType(), 0);
+        assertTrue(temp.getIsMark());
     }
 
     @Test
@@ -87,7 +89,7 @@ public class ParseTest {
         Command c = Parse.parse("unmark asasd");
         assertInstanceOf(MarkCommand.class, c);
         MarkCommand temp = (MarkCommand) c;
-        assertEquals(temp.getType(), 1);
+        assertFalse(temp.getIsMark());
     }
 
     @Test

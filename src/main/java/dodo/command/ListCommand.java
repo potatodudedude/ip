@@ -9,16 +9,13 @@ import dodo.task.TaskList;
  */
 public class ListCommand extends Command {
 
-    public ListCommand() {
-        super(false);
-    }
-
     /**
-     * Calls UI to print out tasks.
+     * Calls UI to return out tasks as a String.
      *
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {

@@ -38,6 +38,7 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
+        assert (type == 0 || type == 1);
         if (type == 0) { // mark
             int targetNo;
             try {

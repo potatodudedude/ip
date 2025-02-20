@@ -18,25 +18,46 @@ import dodo.utilities.DodoException;
  * Command subclass that implements adding Todo, Deadline, and Event tasks.
  */
 public class AddCommand extends Command {
-    private int type;
 
-    private String[] contents;
+    /**
+     * Task type integer that allows for easy passing of information from parsing.
+     * 0 = Todo
+     * 1 = Deadline
+     * 2 = Event
+     */
+    private int taskType;
+
+    private String[] taskDescriptions;
 
     /**
      * Constructor that marks isExit as false.
      */
-    public AddCommand(int type, String[] contents) {
+    public AddCommand(int taskType, String[] taskDescriptions) {
         super(false);
-        this.type = type;
-        this.contents = contents;
+        this.taskType = taskType;
+        this.taskDescriptions = taskDescriptions;
     }
 
-    public int getType() {
-        return type;
+    public int getTaskType() {
+        return this.getTaskType();
     }
 
-    public String[] getContents() {
-        return contents;
+    public String[] getTaskDescriptions() {
+        return this.taskDescriptions;
+    }
+
+    /**
+     * Common code used for adding a task to a taskList, storage, and returning the added task message
+     *
+     * @param newTask
+     * @param ui UI used to return message needed
+     * @param storage
+     * @return String message for successful add command
+     */
+    private String addTask(Task newTask, TaskList tasks, UI ui, Storage storage) {
+        tasks.addTask(newTask);
+        storage.update(tasks);
+        return ui.getUpdateTaskListMessage(tasks, newTask);
     }
 
     /**
@@ -50,33 +71,29 @@ public class AddCommand extends Command {
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
-            DodoCheck.addCommandCheck(contents);
+            DodoCheck.addCommandCheck(taskDescriptions);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
-        String timeDescriptor = contents[1];
+        String timeDescriptor = taskDescriptions[1];
         Task newTask;
-        switch (type) {
+        switch (taskType) {
         case 0: { // Todo
-            newTask = new Todo(contents[1]);
-            tasks.addTask(newTask);
-            storage.update(tasks);
-            return ui.getUpdateTaskListMessage(tasks, newTask);
+            newTask = new Todo(taskDescriptions[1]);
+            return addTask(newTask, tasks, ui, storage);
         }
         case 1: { // Deadline
             String[] details = timeDescriptor.split(" /by ", 2);
-            LocalDateTime time;
+            LocalDateTime deadline;
             try {
                 DodoCheck.deadlineCommandCheck(details);
-                time = stringToLdt(details[1]);
-                DodoCheck.expiredTaskCheck(time);
+                deadline = stringToLdt(details[1]);
+                DodoCheck.expiredTaskCheck(deadline);
             } catch (DodoException ex) {
                 return ui.addPrintErrorPrefix(ex.getMessage());
             }
-            newTask = new Deadline(details[0], time);
-            tasks.addTask(newTask);
-            storage.update(tasks);
-            return ui.getUpdateTaskListMessage(tasks, newTask);
+            newTask = new Deadline(details[0], deadline);
+            return addTask(newTask, tasks, ui, storage);
         }
         case 2: { // Event
             String[] details = timeDescriptor.split(" \\/from | \\/to ", 3);
@@ -92,9 +109,7 @@ public class AddCommand extends Command {
                 return ui.addPrintErrorPrefix(ex.getMessage());
             }
             newTask = new Event(details[0], start, end);
-            tasks.addTask(newTask);
-            storage.update(tasks);
-            return ui.getUpdateTaskListMessage(tasks, newTask);
+            return addTask(newTask, tasks, ui, storage);
         }
         default:
             return ui.getInvalidCommandMessage();

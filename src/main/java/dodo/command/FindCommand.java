@@ -39,9 +39,9 @@ public class FindCommand extends Command {
         String result;
         result = ui.addUpdateFindPrefix(contents[1]) + "\n";
         if (filteredList.isEmpty()) {
-            ui.getEmptyListMessage();
+            result += ui.getEmptyListMessage();
         } else {
-            ui.getTaskListMessage(filteredList);
+            result += ui.getTaskListMessage(filteredList);
         }
         return result;
     }

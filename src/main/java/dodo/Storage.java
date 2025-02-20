@@ -116,7 +116,7 @@ public class Storage {
      *
      * @param tasks
      */
-    public void update(TaskList tasks) {
+    public void updateTaskListFromStorage(TaskList tasks) {
         File temp = new File(System.getProperty("user.dir") + "/data/temp.txt");
         BufferedWriter sW;
         try {

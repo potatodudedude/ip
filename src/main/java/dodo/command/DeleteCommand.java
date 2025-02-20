@@ -39,10 +39,11 @@ public class DeleteCommand extends Command {
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
+
         targetNo = Integer.parseInt(taskNumberString[1]) - 1;
         Task target = tasks.get(targetNo);
         tasks.removeTask(targetNo);
-        storage.update(tasks);
+        storage.updateTaskListFromStorage(tasks);
         return ui.getUpdateDeleteMessage(tasks, target);
     }
 }

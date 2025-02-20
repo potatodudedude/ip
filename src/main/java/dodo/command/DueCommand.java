@@ -14,13 +14,13 @@ import dodo.utilities.DodoException;
  * Command subclass that implements finding tasks by matching expiry dates.
  */
 public class DueCommand extends Command {
-    private String[] contents;
+    private String[] timeString;
 
     /**
      * Constructor
      */
-    public DueCommand(String[] contents) {
-        this.contents = contents;
+    public DueCommand(String[] timeString) {
+        this.timeString = timeString;
     }
 
     /**
@@ -36,11 +36,12 @@ public class DueCommand extends Command {
     public String execute(TaskList tasks, UI ui, Storage storage) {
         LocalDate date;
         try {
-            DodoCheck.checkDueCommand(contents);
-            date = stringToLd(contents[1]);
+            DodoCheck.checkDueCommand(timeString);
+            date = stringToLd(timeString[1]);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
+
         TaskList filteredList = tasks.findByDate(date);
         String result;
         result = ui.addUpdateDuePrefix(date) + "\n";

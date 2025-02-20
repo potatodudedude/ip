@@ -55,7 +55,7 @@ public class AddCommand extends Command {
      */
     private String addTask(Task newTask, TaskList tasks, UI ui, Storage storage) {
         tasks.addTask(newTask);
-        storage.update(tasks);
+        storage.updateTaskListFromStorage(tasks);
         return ui.getUpdateTaskListMessage(tasks, newTask);
     }
 
@@ -83,6 +83,7 @@ public class AddCommand extends Command {
     private String addDeadline(TaskList tasks, UI ui, Storage storage) {
         String[] details = taskDescriptions[1].split(" /by ", 2);
         LocalDateTime deadline;
+
         try {
             DodoCheck.checkDeadlineCommand(details);
             deadline = stringToLdt(details[1]);
@@ -106,6 +107,7 @@ public class AddCommand extends Command {
         String[] details = taskDescriptions[1].split(" \\/from | \\/to ", 3);
         LocalDateTime start;
         LocalDateTime end;
+
         try {
             DodoCheck.checkEventCommand(details);
             start = stringToLdt(details[1]);
@@ -130,7 +132,6 @@ public class AddCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
-        assert (0 <= type && type >= 2);
         try {
             DodoCheck.checkAddCommand(taskDescriptions);
         } catch (DodoException ex) {

@@ -10,13 +10,13 @@ import dodo.utilities.DodoException;
  * Command subclass that allows searching for tasks by description.
  */
 public class FindCommand extends Command {
-    private String[] contents;
+    private String[] searchString;
 
     /**
      * Constructor that marks isExit as false.
      */
-    public FindCommand(String[] contents) {
-        this.contents = contents;
+    public FindCommand(String[] searchString) {
+        this.searchString = searchString;
     }
 
     /**
@@ -31,13 +31,14 @@ public class FindCommand extends Command {
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
-            DodoCheck.checkFindCommand(contents);
+            DodoCheck.checkFindCommand(searchString);
         } catch (DodoException ex) {
             ui.addPrintErrorPrefix(ex.getMessage());
         }
-        TaskList filteredList = tasks.findByDescription(contents[1]);
+
+        TaskList filteredList = tasks.findByDescription(searchString[1]);
         String result;
-        result = ui.addUpdateFindPrefix(contents[1]) + "\n";
+        result = ui.addUpdateFindPrefix(searchString[1]) + "\n";
         if (filteredList.isEmpty()) {
             result += ui.getEmptyListMessage();
         } else {

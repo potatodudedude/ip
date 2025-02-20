@@ -51,8 +51,10 @@ public class MarkCommand extends Command {
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
+
         targetNo = Integer.parseInt(taskNumberString[1]) - 1;
         Task target = tasks.get(targetNo);
+
         if (isMark) {
             target.setDone();
             storage.updateTaskListFromStorage(tasks);

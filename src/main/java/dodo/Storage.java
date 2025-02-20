@@ -75,10 +75,12 @@ public class Storage {
             String line = storageScanner.nextLine();
             String[] lineArr = line.split("\\|");
             int len = lineArr.length;
+
             if (len < 3 || len > 5) {
                 storageScanner.close();
                 throw new DodoException("Incorrect storage formatting");
             }
+
             switch (lineArr[0]) {
             case "T":
                 if (len != 3) {
@@ -128,6 +130,7 @@ public class Storage {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+
         if (!storage.delete()) {
             System.out.println("Cannot delete file");
         }

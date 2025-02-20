@@ -32,6 +32,7 @@ public class InvalidCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
+        assert(type == 0 || type == 1);
         switch(type) {
         case 0: // No command line
             return ui.getEmptyCommandMessage();

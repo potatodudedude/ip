@@ -46,7 +46,7 @@ public class Dodo {
         } catch (DodoException ex) {
             System.out.println(ex.getMessage());
         }
-        storage.update(tasks);
+        storage.updateTaskListFromStorage(tasks);
     }
 
     /**

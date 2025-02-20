@@ -10,14 +10,13 @@ import dodo.utilities.DodoException;
  * Command subclass that allows searching for tasks by description.
  */
 public class FindCommand extends Command {
-    private String[] contents;
+    private String[] searchString;
 
     /**
      * Constructor that marks isExit as false.
      */
-    public FindCommand(String[] contents) {
-        super(false);
-        this.contents = contents;
+    public FindCommand(String[] searchString) {
+        this.searchString = searchString;
     }
 
     /**
@@ -27,21 +26,23 @@ public class FindCommand extends Command {
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
-            DodoCheck.findCommandCheck(contents);
+            DodoCheck.checkFindCommand(searchString);
         } catch (DodoException ex) {
             ui.addPrintErrorPrefix(ex.getMessage());
         }
-        TaskList filteredList = tasks.findByDescription(contents[1]);
+
+        TaskList filteredList = tasks.findByDescription(searchString[1]);
         String result;
-        result = ui.addUpdateFindPrefix(contents[1]) + "\n";
+        result = ui.addUpdateFindPrefix(searchString[1]) + "\n";
         if (filteredList.isEmpty()) {
-            ui.getEmptyListMessage();
+            result += ui.getEmptyListMessage();
         } else {
-            ui.getTaskListMessage(filteredList);
+            result += ui.getTaskListMessage(filteredList);
         }
         return result;
     }

@@ -43,9 +43,9 @@ public class Parse {
         case "event":
             return new AddCommand(2, nextLineArr);
         case "mark":
-            return new MarkCommand(0, nextLineArr);
+            return new MarkCommand(true, nextLineArr);
         case "unmark":
-            return new MarkCommand(1, nextLineArr);
+            return new MarkCommand(false, nextLineArr);
         case "delete":
             return new DeleteCommand(nextLineArr);
         case "due":

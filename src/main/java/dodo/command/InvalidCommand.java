@@ -8,18 +8,17 @@ import dodo.task.TaskList;
  * Command subclass that implements handling the outermost layer of invalid user commands.
  */
 public class InvalidCommand extends Command {
-    private int type;
+    private int invalidType;
 
     /**
      * Constructor that marks isExit as false.
      */
     public InvalidCommand(int type) {
-        super(false);
-        this.type = type;
+        this.invalidType = type;
     }
 
     public int getType() {
-        return type;
+        return invalidType;
     }
 
     /**
@@ -29,11 +28,11 @@ public class InvalidCommand extends Command {
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
-        assert(type == 0 || type == 1);
-        switch(type) {
+        switch(invalidType) {
         case 0: // No command line
             return ui.getEmptyCommandMessage();
         case 1: // Unrecognised command

@@ -11,38 +11,39 @@ import dodo.utilities.DodoException;
  * Command subclass that implements deleting tasks.
  */
 public class DeleteCommand extends Command {
-    private String[] contents;
+    private String[] taskNumberString;
 
     /**
-     * Constructor that marks isExit as false.
+     * Constructor
      */
-    public DeleteCommand(String[] contents) {
-        super(false);
-        this.contents = contents;
+    public DeleteCommand(String[] taskNumberString) {
+        this.taskNumberString = taskNumberString;
     }
 
     /**
      * Checks that the parsed command line contents is valid, then retrieves the task number and removes it from tasks.
-     * Calls the UI to show deleted task.
+     * Calls the UI to return deleted task message.
      *
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
      * @param storage Storage to save data to.
+     * @return String of message to send to user.
      */
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;
         try {
-            DodoCheck.deleteCommandCheck(contents);
-            targetNo = DodoCheck.taskNumberParse(contents[1]);
-            DodoCheck.validTaskNumberCheck(targetNo, tasks);
+            DodoCheck.checkDeleteCommand(taskNumberString);
+            targetNo = DodoCheck.parseTaskNumber(taskNumberString[1]);
+            DodoCheck.checkValidTaskNumber(targetNo, tasks);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
-        targetNo = Integer.parseInt(contents[1]) - 1;
+
+        targetNo = Integer.parseInt(taskNumberString[1]) - 1;
         Task target = tasks.get(targetNo);
         tasks.removeTask(targetNo);
-        storage.update(tasks);
+        storage.updateTaskListFromStorage(tasks);
         return ui.getUpdateDeleteMessage(tasks, target);
     }
 }

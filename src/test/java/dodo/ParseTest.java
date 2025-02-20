@@ -1,7 +1,9 @@
 package dodo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -52,8 +54,8 @@ public class ParseTest {
         Command c = Parse.parse("todo a");
         assertInstanceOf(AddCommand.class, c);
         AddCommand temp = (AddCommand) c;
-        assertEquals(temp.getType(), 0);
-        assertEquals(temp.getContents()[1], "a");
+        assertEquals(temp.getTaskType(), 0);
+        assertEquals(temp.getTaskDescriptions()[1], "a");
     }
 
     @Test
@@ -61,8 +63,8 @@ public class ParseTest {
         Command c = Parse.parse("deadline abaa11");
         assertInstanceOf(AddCommand.class, c);
         AddCommand temp = (AddCommand) c;
-        assertEquals(temp.getType(), 1);
-        assertEquals(temp.getContents()[1], "abaa11");
+        assertEquals(temp.getTaskType(), 1);
+        assertEquals(temp.getTaskDescriptions()[1], "abaa11");
     }
 
     @Test
@@ -70,8 +72,8 @@ public class ParseTest {
         Command c = Parse.parse("event chungagadg asas");
         assertInstanceOf(AddCommand.class, c);
         AddCommand temp = (AddCommand) c;
-        assertEquals(temp.getType(), 2);
-        assertEquals(temp.getContents()[1], "chungagadg asas");
+        assertEquals(temp.getTaskType(), 2);
+        assertEquals(temp.getTaskDescriptions()[1], "chungagadg asas");
     }
 
     @Test
@@ -79,7 +81,7 @@ public class ParseTest {
         Command c = Parse.parse("mark asasd");
         assertInstanceOf(MarkCommand.class, c);
         MarkCommand temp = (MarkCommand) c;
-        assertEquals(temp.getType(), 0);
+        assertTrue(temp.getIsMark());
     }
 
     @Test
@@ -87,7 +89,7 @@ public class ParseTest {
         Command c = Parse.parse("unmark asasd");
         assertInstanceOf(MarkCommand.class, c);
         MarkCommand temp = (MarkCommand) c;
-        assertEquals(temp.getType(), 1);
+        assertFalse(temp.getIsMark());
     }
 
     @Test

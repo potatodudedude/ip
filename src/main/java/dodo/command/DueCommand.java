@@ -36,7 +36,7 @@ public class DueCommand extends Command {
     public String execute(TaskList tasks, UI ui, Storage storage) {
         LocalDate date;
         try {
-            DodoCheck.dueCommandCheck(contents);
+            DodoCheck.checkDueCommand(contents);
             date = stringToLd(contents[1]);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());

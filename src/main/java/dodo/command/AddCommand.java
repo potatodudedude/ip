@@ -46,7 +46,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Common code used for adding a task to a taskList, storage, and returning the added task message
+     * Adds a task to a taskList, storage, and returns the added task message
      *
      * @param tasks TaskList for storing tasks.
      * @param ui UI for printing messages.
@@ -84,9 +84,9 @@ public class AddCommand extends Command {
         String[] details = taskDescriptions[1].split(" /by ", 2);
         LocalDateTime deadline;
         try {
-            DodoCheck.deadlineCommandCheck(details);
+            DodoCheck.checkDeadlineCommand(details);
             deadline = stringToLdt(details[1]);
-            DodoCheck.expiredTaskCheck(deadline);
+            DodoCheck.checkExpiredTask(deadline);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
@@ -107,11 +107,11 @@ public class AddCommand extends Command {
         LocalDateTime start;
         LocalDateTime end;
         try {
-            DodoCheck.eventCommandCheck(details);
+            DodoCheck.checkEventCommand(details);
             start = stringToLdt(details[1]);
             end = stringToLdt(details[2]);
-            DodoCheck.validEventTimeCheck(start, end);
-            DodoCheck.expiredTaskCheck(end);
+            DodoCheck.checkValidEventTime(start, end);
+            DodoCheck.checkExpiredTask(end);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }
@@ -131,7 +131,7 @@ public class AddCommand extends Command {
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
-            DodoCheck.addCommandCheck(taskDescriptions);
+            DodoCheck.checkAddCommand(taskDescriptions);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }

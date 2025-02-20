@@ -58,7 +58,11 @@ public class TaskList {
                     filteredList.addTask(task);
                 }
             } else if (task instanceof Event) {
-                if (((Event) task).getEnd().toLocalDate().isEqual(date)) {
+                LocalDate start = ((Event) task).getStart().toLocalDate();
+                LocalDate end = ((Event) task).getEnd().toLocalDate();
+                boolean isBetween = date.isBefore(end) && date.isAfter(start);
+                boolean isOn = date.isEqual(start) || date.isEqual(end);
+                if (isBetween || isOn) {
                     filteredList.addTask(task);
                 }
             }

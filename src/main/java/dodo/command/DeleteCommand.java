@@ -33,9 +33,9 @@ public class DeleteCommand extends Command {
     public String execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;
         try {
-            DodoCheck.deleteCommandCheck(taskNumberString);
-            targetNo = DodoCheck.taskNumberParse(taskNumberString[1]);
-            DodoCheck.validTaskNumberCheck(targetNo, tasks);
+            DodoCheck.checkDeleteCommand(taskNumberString);
+            targetNo = DodoCheck.parseTaskNumber(taskNumberString[1]);
+            DodoCheck.checkValidTaskNumber(targetNo, tasks);
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());
         }

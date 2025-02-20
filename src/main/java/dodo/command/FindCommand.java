@@ -31,7 +31,7 @@ public class FindCommand extends Command {
     @Override
     public String execute(TaskList tasks, UI ui, Storage storage) {
         try {
-            DodoCheck.findCommandCheck(contents);
+            DodoCheck.checkFindCommand(contents);
         } catch (DodoException ex) {
             ui.addPrintErrorPrefix(ex.getMessage());
         }

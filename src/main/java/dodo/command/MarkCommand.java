@@ -40,13 +40,13 @@ public class MarkCommand extends Command {
     public String execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;
         try {
-            DodoCheck.markCommandCheck(taskNumberString);
-            targetNo = DodoCheck.taskNumberParse(taskNumberString[1]);
-            DodoCheck.validTaskNumberCheck(targetNo, tasks);
+            DodoCheck.checkMarkCommand(taskNumberString);
+            targetNo = DodoCheck.parseTaskNumber(taskNumberString[1]);
+            DodoCheck.checkValidTaskNumber(targetNo, tasks);
             if (isMark) {
-                DodoCheck.redundantMarkCheck(targetNo, true, tasks);
+                DodoCheck.checkRedundantMark(targetNo, true, tasks);
             } else {
-                DodoCheck.redundantMarkCheck(targetNo, false, tasks);
+                DodoCheck.checkRedundantMark(targetNo, false, tasks);
             }
         } catch (DodoException ex) {
             return ui.addPrintErrorPrefix(ex.getMessage());

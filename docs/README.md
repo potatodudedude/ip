@@ -4,9 +4,9 @@
 
 ## Formatting
 
-`CAPITALISED TERMS` in this guide represent the user's input parameters/
+`CAPITALISED TERMS` in this guide represent the user's input parameters.
 
-e.g. `todo NAME`, `NAME` is the user's given name, e.g. `todo Eat`
+e.g. `todo NAME`, `NAME` is the user's given name for the task, e.g. `todo Eat`
 
 `DATE` parameters need the form yyyy-mm-dd. e.g. `2025-03-12`
 
@@ -125,5 +125,13 @@ e.g. `due 2030-03-23` will return tasks 2 and 3 below.
 Here are your tasks:
 1. [T][ ] Eat
 2. [D][ ] Sleep (by: 21:00 23-Mar-2030)
-3. [E][ ] Repear (from: 00:00 01-Jan-1000 to 23:59 29-Dec-2030)
+3. [E][ ] Repeat (from: 00:00 01-Jan-1000 to 23:59 29-Dec-2030)
 ```
+
+## Reminders
+
+Dodo will remind you of any tasks due today after startup.
+
+## Bye command
+
+Type `bye` or `bb` to quit program.

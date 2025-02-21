@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.util.Collections;
 
+import dodo.UI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,16 +49,34 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        dialog.getStyleClass().add("reply-label");
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDodoDialog(String text, Image img) {
+    public static DialogBox getDodoDialog(String text, Image img, String textColour) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.changeDialogStyle(textColour);
         return db;
+    }
+
+    private void changeDialogStyle(String textColour) {
+        switch(textColour) {
+        case UI.GREEN:
+            dialog.getStyleClass().add("green-label");
+            break;
+        case UI.YELLOW:
+            dialog.getStyleClass().add("yellow-label");
+            break;
+        case UI.RED:
+            dialog.getStyleClass().add("red-label");
+            break;
+        default:
+            // Do nothing
+        }
     }
 }
 

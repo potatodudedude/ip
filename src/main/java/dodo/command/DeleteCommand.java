@@ -6,6 +6,7 @@ import dodo.task.Task;
 import dodo.task.TaskList;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
+import dodo.utilities.TextColourPair;
 
 /**
  * Command subclass that implements deleting tasks.
@@ -14,7 +15,7 @@ public class DeleteCommand extends Command {
     private String[] taskNumberString;
 
     /**
-     * Constructor
+     * Constructor that sets user command line.
      */
     public DeleteCommand(String[] taskNumberString) {
         this.taskNumberString = taskNumberString;
@@ -30,7 +31,7 @@ public class DeleteCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;
         try {
             DodoCheck.checkDeleteCommand(taskNumberString);

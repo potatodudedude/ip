@@ -1,0 +1,35 @@
+.label {
+    -fx-background-color: #bffdff;
+    -fx-border-color: #ebebeb;
+    -fx-border-width: 2px;
+    -fx-background-radius: 1.3em 1.3em 0 1.3em;
+    -fx-border-radius: 1em 1em 0 1em;
+}
+
+.reply-label {
+    -fx-background-color: #063238;
+    -fx-background-radius: 1.3em 1.3em 1.3em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+    -fx-text-fill: white;
+}
+
+#displayPicture {
+    /* Change size of image. */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+
+    /* Rotate image clockwise by degrees. */
+    -fx-rotate: 0;
+}
+
+.green-label {
+    -fx-text-fill: #6bff6b
+}
+
+.yellow-label {
+    -fx-text-fill: #fff56b
+}
+
+.red-label {
+    -fx-text-fill: #ff6b6b
+}

@@ -1,0 +1,47 @@
+.root {
+    -fx-background-image: url("../images/dododo.png"); /* Set image */
+    -fx-background-repeat: repeat;
+}
+
+.text-field {
+    -fx-background-color: #063238;
+    -fx-font: bold 16px "Courier New";
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-font: bold 16px "Courier New";
+}
+
+.button:hover {
+    -fx-background-color: #7a7a7a;
+    -fx-font-size: 18px;
+}
+
+.button:pressed {
+    -fx-background-color: #383838;
+    -fx-font-size: 20px;
+}
+
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;  /* Change width of scroll bar. */
+    -fx-background-color: black;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #858585;
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}

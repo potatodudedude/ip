@@ -38,7 +38,7 @@ public class FindCommand extends Command {
 
         TaskList filteredList = tasks.findByDescription(searchString[1]);
         String result;
-        result = ui.addUpdateFindPrefix(searchString[1]) + "\n";
+        result = ui.getUpdateFindHeader(searchString[1]);
         if (filteredList.isEmpty()) {
             result += ui.getEmptyListMessage();
         } else {

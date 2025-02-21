@@ -22,7 +22,7 @@ public class ListCommand extends Command {
         if (tasks.isEmpty()) {
             return ui.getNoTaskMessage();
         }
-        String result = ui.getTaskHeaderMessage() + "\n";
+        String result = ui.getTaskHeaderMessage();
         result += ui.getTaskListMessage(tasks);
         return result;
     }

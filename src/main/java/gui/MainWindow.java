@@ -1,6 +1,7 @@
 package gui;
 
 import dodo.Dodo;
+import dodo.command.ReminderCommand;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,9 +42,8 @@ public class MainWindow extends AnchorPane {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        dialogContainer.getChildren().addAll(
-                DialogBox.getDodoDialog(dodo.getUi().getIntroMessage(), dodoImage)
-        );
+        sendDodoMessage(dodo.getUi().getIntroMessage());
+        sendDodoMessage(new ReminderCommand().execute(dodo.getTasks(), dodo.getUi(), dodo.getStorage()));
     }
 
     /**
@@ -65,5 +65,14 @@ public class MainWindow extends AnchorPane {
         }
     }
 
-
+    /**
+     * Sends the input message as a dodo DialogBox
+     *
+     * @param message Message to send through Dodo
+     */
+    private void sendDodoMessage(String message) {
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDodoDialog(message, dodoImage)
+        );
+    }
 }

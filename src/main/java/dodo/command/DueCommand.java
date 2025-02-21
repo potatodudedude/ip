@@ -44,7 +44,7 @@ public class DueCommand extends Command {
 
         TaskList filteredList = tasks.findByDate(date);
         String result;
-        result = ui.addUpdateDuePrefix(date) + "\n";
+        result = ui.getUpdateDueHeader(date);
         if (filteredList.isEmpty()) {
             result += ui.getEmptyListMessage();
         } else {

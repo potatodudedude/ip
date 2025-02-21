@@ -13,8 +13,8 @@ import dodo.utilities.DodoException;
  */
 public class Dodo {
     private TaskList tasks;
-    private Storage storage;
     private UI ui;
+    private Storage storage;
 
     /**
      * Constructor that initialises with specified storage poth.
@@ -67,7 +67,14 @@ public class Dodo {
         return nextCommand.execute(tasks, ui, storage);
     }
 
+    public TaskList getTasks() {
+        return this.tasks;
+    }
     public UI getUi() {
         return this.ui;
+    }
+
+    public Storage getStorage() {
+        return this.storage;
     }
 }

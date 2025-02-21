@@ -70,7 +70,7 @@ public class UI {
      * Returns header text before list.
      */
     public String getTaskHeaderMessage() {
-        return ("Here are your tasks:");
+        return ("Here are your tasks:\n");
     }
 
     /**
@@ -117,16 +117,16 @@ public class UI {
     /**
      * Returns the text preceding the list of tasks due on the input date.
      */
-    public String addUpdateDuePrefix(LocalDate date) {
+    public String getUpdateDueHeader(LocalDate date) {
         return ("Here are the tasks due on "
-                + date.format(PRESENTATION_DF) + ":");
+                + date.format(PRESENTATION_DF) + ":\n");
     }
 
     /**
      * Returns the text preceding the list of tasks matching the find command.
      */
-    public String addUpdateFindPrefix(String line) {
-        return ("Here are the tasks matching your description of: " + line);
+    public String getUpdateFindHeader(String line) {
+        return ("Here are the tasks matching your description of: " + line + "\n");
     }
 
     /**
@@ -150,6 +150,20 @@ public class UI {
     public String getEmptyListMessage() {
         increaseDodohead();
         return dodoCheck("Looks like there were none found. :v");
+    }
+
+    /**
+     * Returns out a header for reminder tasks
+     */
+    public String getReminderHeader() {
+        return ("Dododo! These tasks are due or ongoing today!:\n");
+    }
+
+    /**
+     * Returns out a header for reminder tasks
+     */
+    public String getNoReminderMessage() {
+        return ("No tasks due today! Yippie!");
     }
 
     /**

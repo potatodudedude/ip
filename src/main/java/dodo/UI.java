@@ -53,13 +53,6 @@ public class UI {
     }
 
     /**
-     * Increases dodoheadCount.
-     */
-    private void increaseDodohead() {
-        dodoheadCount++;
-    }
-
-    /**
      * Returns goodbye message.
      */
     public TextColourPair getByeMessage() {
@@ -70,14 +63,16 @@ public class UI {
      * Returns text for no command.
      */
     public TextColourPair getEmptyCommandMessage() {
-        return new TextColourPair("You've gotta enter a command first dodo head!", RED);
+        dodoheadCount++;
+        return checkDodoHead("You've gotta enter a command first dodo head!");
     }
 
     /**
      * Returns text for invalid command.
      */
     public TextColourPair getInvalidCommandMessage() {
-        return new TextColourPair("Huh?", RED);
+        dodoheadCount++;
+        return checkDodoHead("Huh?");
     }
 
     /**
@@ -123,7 +118,7 @@ public class UI {
      * Attaches and returns out a prefix before a DodoException message.
      */
     public TextColourPair addPrintErrorPrefix(String message) {
-        increaseDodohead();
+        dodoheadCount++;
         return checkDodoHead("Uh oh! " + message);
     }
 
@@ -145,7 +140,7 @@ public class UI {
      */
     public TextColourPair getFindMessage(TaskList filteredTasks, String description) {
         if (filteredTasks.isEmpty()) {
-            return new TextColourPair("Whuh oh, no tasks found matching you description of : " + description,
+            return new TextColourPair("Whuh oh, no tasks found matching you description of: " + description,
                     YELLOW);
         }
         return new TextColourPair("Here are the task(s) matching your description of: " + description + "\n"

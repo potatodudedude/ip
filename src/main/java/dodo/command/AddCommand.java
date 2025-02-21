@@ -13,6 +13,7 @@ import dodo.task.TaskList;
 import dodo.task.Todo;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
+import dodo.utilities.TextColourPair;
 
 /**
  * Command subclass that implements adding Todo, Deadline, and Event tasks.
@@ -33,7 +34,6 @@ public class AddCommand extends Command {
      * Constructor that sets task type and user command line.
      */
     public AddCommand(int taskType, String[] taskDescriptions) {
-        super("AddCommand");
         this.taskType = taskType;
         this.taskDescriptions = taskDescriptions;
     }
@@ -54,7 +54,7 @@ public class AddCommand extends Command {
      * @param storage Storage to save data to.
      * @return String of message to send to user.
      */
-    private String addTask(Task newTask, TaskList tasks, UI ui, Storage storage) {
+    private TextColourPair addTask(Task newTask, TaskList tasks, UI ui, Storage storage) {
         tasks.addTask(newTask);
         storage.updateTaskListFromStorage(tasks);
         return ui.getUpdateTaskListMessage(tasks, newTask);
@@ -68,7 +68,7 @@ public class AddCommand extends Command {
      * @param storage Storage to save data to.
      * @return String of message to send to user.
      */
-    private String addTodo(TaskList tasks, UI ui, Storage storage) {
+    private TextColourPair addTodo(TaskList tasks, UI ui, Storage storage) {
         Task newTask = new Todo(taskDescriptions[1]);
         return addTask(newTask, tasks, ui, storage);
     }
@@ -81,7 +81,7 @@ public class AddCommand extends Command {
      * @param storage Storage to save data to.
      * @return String of message to send to user.
      */
-    private String addDeadline(TaskList tasks, UI ui, Storage storage) {
+    private TextColourPair addDeadline(TaskList tasks, UI ui, Storage storage) {
         String[] details = taskDescriptions[1].split(" /by ", 2);
         LocalDateTime deadline;
 
@@ -104,7 +104,7 @@ public class AddCommand extends Command {
      * @param storage Storage to save data to.
      * @return String of message to send to user.
      */
-    private String addEvent(TaskList tasks, UI ui, Storage storage) {
+    private TextColourPair addEvent(TaskList tasks, UI ui, Storage storage) {
         String[] details = taskDescriptions[1].split(" \\/from | \\/to ", 3);
         LocalDateTime start;
         LocalDateTime end;
@@ -132,7 +132,7 @@ public class AddCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         try {
             DodoCheck.checkAddCommand(taskDescriptions);
         } catch (DodoException ex) {

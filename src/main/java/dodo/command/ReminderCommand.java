@@ -5,16 +5,13 @@ import java.time.LocalDate;
 import dodo.Storage;
 import dodo.UI;
 import dodo.task.TaskList;
+import dodo.utilities.TextColourPair;
 
 
 /**
  * Command subclass that implements reminders for tasks due today
  */
 public class ReminderCommand extends Command {
-
-    public ReminderCommand() {
-        super("ReminderCommand");
-    }
 
     /**
      * Checks and gives returns reminder message for tasks due today, if any.
@@ -25,15 +22,10 @@ public class ReminderCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         LocalDate date = LocalDate.now();
 
         TaskList filteredList = tasks.findByDate(date);
-        if (filteredList.isEmpty()) {
-            return ui.getNoReminderMessage();
-        }
-        String result;
-        result = ui.getReminderHeader() + ui.getTaskListMessage(filteredList);
-        return result;
+        return ui.getReminderMessage(filteredList);
     }
 }

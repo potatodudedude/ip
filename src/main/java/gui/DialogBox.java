@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.util.Collections;
 
+import dodo.UI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -55,23 +56,23 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDodoDialog(String text, Image img, String commandType) {
+    public static DialogBox getDodoDialog(String text, Image img, String textColour) {
         var db = new DialogBox(text, img);
         db.flip();
-        db.changeDialogStyle(commandType);
+        db.changeDialogStyle(textColour);
         return db;
     }
 
-    private void changeDialogStyle(String commandType) {
-        switch(commandType) {
-        case "AddCommand":
-            dialog.getStyleClass().add("add-label");
+    private void changeDialogStyle(String textColour) {
+        switch(textColour) {
+        case UI.GREEN:
+            dialog.getStyleClass().add("green-label");
             break;
-        case "MarkCommand":
-            dialog.getStyleClass().add("marked-label");
+        case UI.YELLOW:
+            dialog.getStyleClass().add("yellow-label");
             break;
-        case "DeleteCommand":
-            dialog.getStyleClass().add("delete-label");
+        case UI.RED:
+            dialog.getStyleClass().add("red-label");
             break;
         default:
             // Do nothing

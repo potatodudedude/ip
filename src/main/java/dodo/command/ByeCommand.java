@@ -3,6 +3,7 @@ package dodo.command;
 import dodo.Storage;
 import dodo.UI;
 import dodo.task.TaskList;
+import dodo.utilities.TextColourPair;
 
 
 /**
@@ -10,9 +11,6 @@ import dodo.task.TaskList;
  */
 public class ByeCommand extends Command {
 
-    public ByeCommand() {
-        super("ByeCommand");
-    }
     /**
      * Calls the UI to return bye message.
      *
@@ -22,7 +20,7 @@ public class ByeCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         return ui.getByeMessage();
     }
 }

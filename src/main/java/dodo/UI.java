@@ -6,11 +6,16 @@ import java.time.LocalDate;
 
 import dodo.task.Task;
 import dodo.task.TaskList;
+import dodo.utilities.TextColourPair;
 
 /**
  * Class for messages to the user.
  */
 public class UI {
+    public static final String GREEN = "green";
+    public static final String YELLOW = "yellow";
+    public static final String RED = "red";
+    public static final String WHITE = "white";
     private int dodoheadCount;
 
     /**
@@ -37,12 +42,14 @@ public class UI {
      * Upon receiving an error message, checks if user has had repeated errors, if so adds help prompt to end of line.
      * repeated error count "dodoheadCount" is reset if help prompt is made.
      */
-    private String dodoCheck(String errorLine) {
+    private TextColourPair checkDodoHead(String errorLine) {
         if (dodoheadCount > 3) {
             dodoheadCount = 0;
-            return (errorLine + "\nYou seem to be struggling. Type 'help' if you need to see the command list.");
+            return new TextColourPair(
+                    errorLine + "\nYou seem to be struggling. Type 'help' if you need to see the command list.",
+                    RED);
         }
-        return errorLine;
+        return new TextColourPair(errorLine, RED);
     }
 
     /**
@@ -55,122 +62,114 @@ public class UI {
     /**
      * Returns goodbye message.
      */
-    public String getByeMessage() {
-        return ("K bye bye :)");
-    }
-
-    /**
-     * Returns that there are no tasks.
-     */
-    public String getNoTaskMessage() {
-        return ("You have no tasks. Yay!");
-    }
-
-    /**
-     * Returns header text before list.
-     */
-    public String getTaskHeaderMessage() {
-        return ("Here are your tasks:\n");
+    public TextColourPair getByeMessage() {
+        return new TextColourPair("K bye bye :)", WHITE);
     }
 
     /**
      * Returns text for no command.
      */
-    public String getEmptyCommandMessage() {
-        return ("You've gotta enter a command first dodo head!");
+    public TextColourPair getEmptyCommandMessage() {
+        return new TextColourPair("You've gotta enter a command first dodo head!", RED);
     }
 
     /**
      * Returns text for invalid command.
      */
-    public String getInvalidCommandMessage() {
-        return ("Huh?");
+    public TextColourPair getInvalidCommandMessage() {
+        return new TextColourPair("Huh?", RED);
     }
 
     /**
      * Returns text after adding tasks displaying the task added and the new total.
      */
-    public String getUpdateTaskListMessage(TaskList tasks, Task newTask) {
-        return ("Added this to your list:\n" + newTask.toString()
-                + "\nYou now have " + tasks.size() + " task(s).");
+    public TextColourPair getUpdateTaskListMessage(TaskList tasks, Task newTask) {
+        return new TextColourPair("Added this to your list:\n" + newTask.toString()
+                + "\nYou now have " + tasks.size() + " task(s).",
+                GREEN);
     }
 
     /**
      * Returns text after marking/unmarking tasks displaying the task marked/unmarked.
      */
-    public String getUpdateMarkMessage(Task task, boolean isMark) {
+    public TextColourPair getUpdateMarkMessage(Task task, boolean isMark) {
         if (isMark) {
-            return ("Marked as done:\n" + task.toString());
+            return new TextColourPair("Marked as done:\n" + task.toString(), GREEN);
         } else {
-            return ("Marked as undone:\n" + task.toString());
+            return new TextColourPair("Marked as undone:\n" + task.toString(), YELLOW);
         }
     }
 
     /**
      * Returns text after deleting tasks displaying the task deleted and the new total.
      */
-    public String getUpdateDeleteMessage(TaskList tasks, Task target) {
-        return ("The following task has been destroyed:\n" + target.toString()
-                + "\nYou now have " + tasks.size() + " task(s).");
+    public TextColourPair getUpdateDeleteMessage(TaskList tasks, Task target) {
+        return new TextColourPair("The following task has been destroyed:\n" + target.toString()
+                + "\nYou now have " + tasks.size() + " task(s).",
+                YELLOW);
     }
 
     /**
-     * Returns the text preceding the list of tasks due on the input date.
+     * Returns taskList or message informing of no tasks.
      */
-    public String getUpdateDueHeader(LocalDate date) {
-        return ("Here are the tasks due on "
-                + date.format(PRESENTATION_DF) + ":\n");
+    public TextColourPair getTaskListMessage(TaskList tasks) {
+        if (tasks.isEmpty()) {
+            return new TextColourPair("You have no tasks. Yay!", GREEN);
+        }
+        return new TextColourPair("Here are your tasks:\n" + tasks.taskPrinter(), WHITE);
     }
 
     /**
-     * Returns the text preceding the list of tasks matching the find command.
+     * Attaches and returns out a prefix before a DodoException message.
      */
-    public String getUpdateFindHeader(String line) {
-        return ("Here are the tasks matching your description of: " + line + "\n");
-    }
-
-    /**
-     * Gets TaskList class to return the input TaskList
-     */
-    public String getTaskListMessage(TaskList tasks) {
-        return tasks.taskPrinter();
-    }
-
-    /**
-     * Returns out a prefix before a DodoException message.
-     */
-    public String addPrintErrorPrefix(String message) {
+    public TextColourPair addPrintErrorPrefix(String message) {
         increaseDodohead();
-        return dodoCheck("Uh oh! " + message);
+        return checkDodoHead("Uh oh! " + message);
     }
 
     /**
-     * Returns out message to convey a list is empty.
+     * Returns out a message for due commands
      */
-    public String getEmptyListMessage() {
-        increaseDodohead();
-        return dodoCheck("Looks like there were none found. :v");
+    public TextColourPair getDueMessage(TaskList filteredTasks, LocalDate date) {
+        if (filteredTasks.isEmpty()) {
+            return new TextColourPair("Yippee! No tasks due on: " + date.format(PRESENTATION_DF),
+                    GREEN);
+        }
+        return new TextColourPair("Here are the task(s) due on: " + date.format(PRESENTATION_DF) + "\n"
+                + filteredTasks.taskPrinter(),
+                WHITE);
     }
 
     /**
-     * Returns out a header for reminder tasks
+     * Returns out a message for find commands
      */
-    public String getReminderHeader() {
-        return ("Dododo! These tasks are due or ongoing today!:\n");
+    public TextColourPair getFindMessage(TaskList filteredTasks, String description) {
+        if (filteredTasks.isEmpty()) {
+            return new TextColourPair("Whuh oh, no tasks found matching you description of : " + description,
+                    YELLOW);
+        }
+        return new TextColourPair("Here are the task(s) matching your description of: " + description + "\n"
+                + filteredTasks.taskPrinter(),
+                WHITE);
     }
 
     /**
-     * Returns out a header for reminder tasks
+     * Returns out a message for reminder tasks
      */
-    public String getNoReminderMessage() {
-        return ("No tasks due today! Yippie!");
+    public TextColourPair getReminderMessage(TaskList filteredTasks) {
+        if (filteredTasks.isEmpty()) {
+            return new TextColourPair("No tasks due today! Yippie!", GREEN);
+        }
+        return new TextColourPair("Dododo! These tasks are due or ongoing today!:\n"
+                + filteredTasks.taskPrinter(),
+                WHITE);
     }
 
     /**
      * Returns out a help list for commands.
      */
-    public String getHelpMessage() {
-        return ("You got it boss! Here you go:\n"
+    public TextColourPair getHelpMessage() {
+        return new TextColourPair("You got it boss! Here you go:\n"
                 + "list -> lists all current tasks and their numbering\n"
                 + "todo 'name' -> adds a task called 'name'\n"
                 + "commands that need 'time' must be in the yyyy-mm-dd hh:ss format"
@@ -182,6 +181,7 @@ public class UI {
                 + "delete 'task number' -> removes corresponding task"
                 + "due 'yyyy-mm-dd' -> returns a list with the provided due date"
                 + "find 'description' -> returns a list with tasks that have the description in their name"
-                + "bye -> dododo");
+                + "bye -> dododo",
+                WHITE);
     }
 }

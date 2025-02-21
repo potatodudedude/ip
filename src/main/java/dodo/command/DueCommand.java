@@ -9,6 +9,7 @@ import dodo.UI;
 import dodo.task.TaskList;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
+import dodo.utilities.TextColourPair;
 
 /**
  * Command subclass that implements finding tasks by matching expiry dates.
@@ -20,7 +21,6 @@ public class DueCommand extends Command {
      * Constructor that sets user command line.
      */
     public DueCommand(String[] timeString) {
-        super("DueCommand");
         this.timeString = timeString;
     }
 
@@ -34,7 +34,7 @@ public class DueCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         LocalDate date;
         try {
             DodoCheck.checkDueCommand(timeString);
@@ -44,13 +44,6 @@ public class DueCommand extends Command {
         }
 
         TaskList filteredList = tasks.findByDate(date);
-        String result;
-        result = ui.getUpdateDueHeader(date);
-        if (filteredList.isEmpty()) {
-            result += ui.getEmptyListMessage();
-        } else {
-            result += ui.getTaskListMessage(filteredList);
-        }
-        return result;
+        return ui.getDueMessage(filteredList, date);
     }
 }

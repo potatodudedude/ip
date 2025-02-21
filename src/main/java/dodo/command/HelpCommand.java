@@ -3,16 +3,13 @@ package dodo.command;
 import dodo.Storage;
 import dodo.UI;
 import dodo.task.TaskList;
+import dodo.utilities.TextColourPair;
 
 
 /**
  * Command subclass that implements helping.
  */
 public class HelpCommand extends Command {
-
-    public HelpCommand() {
-        super("HelpCommand");
-    }
 
     /**
      * Calls UI to print the help list.
@@ -23,7 +20,7 @@ public class HelpCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         return ui.getHelpMessage();
     }
 }

@@ -6,6 +6,7 @@ import dodo.task.Task;
 import dodo.task.TaskList;
 import dodo.utilities.DodoCheck;
 import dodo.utilities.DodoException;
+import dodo.utilities.TextColourPair;
 
 /**
  * Command subclass that implements marking/unmarking tasks.
@@ -18,7 +19,6 @@ public class MarkCommand extends Command {
      * Constructor that sets mark/unmark status and user command line.
      */
     public MarkCommand(boolean isMark, String[] taskNumberString) {
-        super("MarkCommand");
         this.isMark = isMark;
         this.taskNumberString = taskNumberString;
     }
@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         int targetNo;
         try {
             DodoCheck.checkMarkCommand(taskNumberString);

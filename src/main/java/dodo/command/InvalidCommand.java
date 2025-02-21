@@ -3,6 +3,7 @@ package dodo.command;
 import dodo.Storage;
 import dodo.UI;
 import dodo.task.TaskList;
+import dodo.utilities.TextColourPair;
 
 /**
  * Command subclass that implements handling the outermost layer of invalid user commands.
@@ -14,7 +15,6 @@ public class InvalidCommand extends Command {
      * Constructor that sets type of invalid command.
      */
     public InvalidCommand(int type) {
-        super("InvalidCommand");
         this.invalidType = type;
     }
 
@@ -32,7 +32,7 @@ public class InvalidCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
         switch(invalidType) {
         case 0: // No command line
             return ui.getEmptyCommandMessage();

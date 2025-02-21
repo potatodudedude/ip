@@ -3,15 +3,12 @@ package dodo.command;
 import dodo.Storage;
 import dodo.UI;
 import dodo.task.TaskList;
+import dodo.utilities.TextColourPair;
 
 /**
  * Command subclass that implements listing tasks.
  */
 public class ListCommand extends Command {
-
-    public ListCommand() {
-        super("ListCommand");
-    }
 
     /**
      * Calls UI to return out tasks as a String.
@@ -22,12 +19,7 @@ public class ListCommand extends Command {
      * @return String of message to send to user.
      */
     @Override
-    public String execute(TaskList tasks, UI ui, Storage storage) {
-        if (tasks.isEmpty()) {
-            return ui.getNoTaskMessage();
-        }
-        String result = ui.getTaskHeaderMessage();
-        result += ui.getTaskListMessage(tasks);
-        return result;
+    public TextColourPair execute(TaskList tasks, UI ui, Storage storage) {
+        return ui.getTaskListMessage(tasks);
     }
 }

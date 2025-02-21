@@ -6,6 +6,7 @@ import java.io.IOException;
 import dodo.command.Command;
 import dodo.task.TaskList;
 import dodo.utilities.DodoException;
+import dodo.utilities.TextColourPair;
 
 /**
  * Class where the dodo chatbot initialises from.
@@ -15,7 +16,7 @@ public class Dodo {
     private TaskList tasks;
     private UI ui;
     private Storage storage;
-    private String commandType;
+    private String textColour;
 
     /**
      * Constructor that initialises with specified storage poth.
@@ -65,8 +66,9 @@ public class Dodo {
      */
     public String getResponse(String input) {
         Command nextCommand = Parse.parse(input);
-        commandType = nextCommand.getCommandType();
-        return nextCommand.execute(tasks, ui, storage);
+        TextColourPair response = nextCommand.execute(tasks, ui, storage);
+        this.textColour = response.getColour();
+        return response.getText();
     }
 
     public TaskList getTasks() {
@@ -80,7 +82,7 @@ public class Dodo {
         return this.storage;
     }
 
-    public String getCommandType() {
-        return this.commandType;
+    public String getTextColour() {
+        return this.textColour;
     }
 }

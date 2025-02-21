@@ -167,16 +167,16 @@ public class UI {
         return new TextColourPair("You got it boss! Here you go:\n"
                 + "list -> lists all current tasks and their numbering\n"
                 + "todo 'name' -> adds a task called 'name'\n"
-                + "commands that need 'time' must be in the yyyy-mm-dd hh:ss format"
+                + "commands that need 'time' must be in the yyyy-mm-dd hh:ss format\n"
                 + "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n"
                 + "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from "
                 + "'start' to 'end'\n"
                 + "mark 'task number' -> marks corresponding task as done\n"
                 + "unmark 'task number' -> marks corresponding task as undone\n"
-                + "delete 'task number' -> removes corresponding task"
-                + "due 'yyyy-mm-dd' -> returns a list with the provided due date"
-                + "find 'description' -> returns a list with tasks that have the description in their name"
-                + "bye -> dododo",
+                + "delete 'task number' -> removes corresponding task\n"
+                + "due 'yyyy-mm-dd' -> returns a list with the provided due date\n"
+                + "find 'description' -> returns a list with tasks that have the description in their name\n"
+                + "bye or bb -> dododo",
                 WHITE);
     }
 }

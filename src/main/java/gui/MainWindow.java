@@ -1,9 +1,6 @@
 package gui;
 
-import java.util.concurrent.TimeUnit;
-
 import dodo.Dodo;
-import dodo.UI;
 import dodo.command.ReminderCommand;
 import dodo.utilities.TextColourPair;
 import javafx.application.Platform;

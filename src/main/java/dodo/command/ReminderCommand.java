@@ -12,6 +12,10 @@ import dodo.task.TaskList;
  */
 public class ReminderCommand extends Command {
 
+    public ReminderCommand() {
+        super("ReminderCommand");
+    }
+
     /**
      * Checks and gives returns reminder message for tasks due today, if any.
      *

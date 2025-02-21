@@ -10,6 +10,9 @@ import dodo.task.TaskList;
  */
 public class ByeCommand extends Command {
 
+    public ByeCommand() {
+        super("ByeCommand");
+    }
     /**
      * Calls the UI to return bye message.
      *

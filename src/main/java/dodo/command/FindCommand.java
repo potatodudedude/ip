@@ -13,9 +13,10 @@ public class FindCommand extends Command {
     private String[] searchString;
 
     /**
-     * Constructor that marks isExit as false.
+     * Constructor that sets user command line.
      */
     public FindCommand(String[] searchString) {
+        super("FindCommand");
         this.searchString = searchString;
     }
 

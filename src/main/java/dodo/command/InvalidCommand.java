@@ -11,9 +11,10 @@ public class InvalidCommand extends Command {
     private int invalidType;
 
     /**
-     * Constructor that marks isExit as false.
+     * Constructor that sets type of invalid command.
      */
     public InvalidCommand(int type) {
+        super("InvalidCommand");
         this.invalidType = type;
     }
 

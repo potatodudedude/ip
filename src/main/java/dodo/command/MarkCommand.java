@@ -15,9 +15,10 @@ public class MarkCommand extends Command {
     private String[] taskNumberString;
 
     /**
-     * Constructor that marks isExit as false.
+     * Constructor that sets mark/unmark status and user command line.
      */
     public MarkCommand(boolean isMark, String[] taskNumberString) {
+        super("MarkCommand");
         this.isMark = isMark;
         this.taskNumberString = taskNumberString;
     }

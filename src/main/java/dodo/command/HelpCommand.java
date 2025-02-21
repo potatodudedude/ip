@@ -10,6 +10,10 @@ import dodo.task.TaskList;
  */
 public class HelpCommand extends Command {
 
+    public HelpCommand() {
+        super("HelpCommand");
+    }
+
     /**
      * Calls UI to print the help list.
      *

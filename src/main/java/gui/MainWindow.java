@@ -42,8 +42,10 @@ public class MainWindow extends AnchorPane {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        sendDodoMessage(dodo.getUi().getIntroMessage());
-        sendDodoMessage(new ReminderCommand().execute(dodo.getTasks(), dodo.getUi(), dodo.getStorage()));
+        sendDodoMessage(dodo.getUi().getIntroMessage(), "noCommand");
+
+        ReminderCommand reminder = new ReminderCommand();
+        sendDodoMessage(reminder.execute(dodo.getTasks(), dodo.getUi(), dodo.getStorage()), reminder.getCommandType());
     }
 
     /**
@@ -54,9 +56,11 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = dodo.getResponse(input);
+        String commandType = dodo.getCommandType();
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDodoDialog(response, dodoImage)
+                DialogBox.getDodoDialog(response, dodoImage, commandType)
         );
         userInput.clear();
         if (response.equals(dodo.getUi().getByeMessage())) {
@@ -70,9 +74,9 @@ public class MainWindow extends AnchorPane {
      *
      * @param message Message to send through Dodo
      */
-    private void sendDodoMessage(String message) {
+    private void sendDodoMessage(String message, String commandType) {
         dialogContainer.getChildren().addAll(
-                DialogBox.getDodoDialog(message, dodoImage)
+                DialogBox.getDodoDialog(message, dodoImage, commandType)
         );
     }
 }

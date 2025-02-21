@@ -14,9 +14,10 @@ public class DeleteCommand extends Command {
     private String[] taskNumberString;
 
     /**
-     * Constructor
+     * Constructor that sets user command line.
      */
     public DeleteCommand(String[] taskNumberString) {
+        super("DeleteCommand");
         this.taskNumberString = taskNumberString;
     }
 

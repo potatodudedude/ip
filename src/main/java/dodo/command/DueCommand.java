@@ -17,9 +17,10 @@ public class DueCommand extends Command {
     private String[] timeString;
 
     /**
-     * Constructor
+     * Constructor that sets user command line.
      */
     public DueCommand(String[] timeString) {
+        super("DueCommand");
         this.timeString = timeString;
     }
 

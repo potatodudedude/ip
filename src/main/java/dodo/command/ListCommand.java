@@ -9,6 +9,10 @@ import dodo.task.TaskList;
  */
 public class ListCommand extends Command {
 
+    public ListCommand() {
+        super("ListCommand");
+    }
+
     /**
      * Calls UI to return out tasks as a String.
      *

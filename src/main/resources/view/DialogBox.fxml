@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -10,15 +11,18 @@
     <children>
         <Label fx:id="dialog" minHeight="-Infinity" text="Label" wrapText="true">
          <font>
-            <Font name="Arial" size="12.0" />
+            <Font name="Courier New Bold" size="12.0" />
          </font>
          <HBox.margin>
             <Insets left="7.0" right="7.0" />
          </HBox.margin>
          <padding>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-         </padding></Label>
-        <ImageView fx:id="displayPicture" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" />
+         </padding>
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis></Label>
+        <ImageView fx:id="displayPicture" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
     </children>
     <padding>
         <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />

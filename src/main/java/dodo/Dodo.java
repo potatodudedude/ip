@@ -15,6 +15,7 @@ public class Dodo {
     private TaskList tasks;
     private UI ui;
     private Storage storage;
+    private String commandType;
 
     /**
      * Constructor that initialises with specified storage poth.
@@ -64,6 +65,7 @@ public class Dodo {
      */
     public String getResponse(String input) {
         Command nextCommand = Parse.parse(input);
+        commandType = nextCommand.getCommandType();
         return nextCommand.execute(tasks, ui, storage);
     }
 
@@ -76,5 +78,9 @@ public class Dodo {
 
     public Storage getStorage() {
         return this.storage;
+    }
+
+    public String getCommandType() {
+        return this.commandType;
     }
 }

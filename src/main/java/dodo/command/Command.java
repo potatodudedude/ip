@@ -10,6 +10,16 @@ import dodo.task.TaskList;
  * Has abstract method for executing.
  */
 public abstract class Command {
+    private String commandType;
+
+    public Command(String commandType) {
+        this.commandType = commandType;
+    }
+
+    public String getCommandType() {
+        return this.commandType;
+    }
+
     /**
      * Executes the command's specific purpose.
      *

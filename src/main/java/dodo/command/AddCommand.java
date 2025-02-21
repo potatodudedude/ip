@@ -30,9 +30,10 @@ public class AddCommand extends Command {
     private String[] taskDescriptions;
 
     /**
-     * Constructor
+     * Constructor that sets task type and user command line.
      */
     public AddCommand(int taskType, String[] taskDescriptions) {
+        super("AddCommand");
         this.taskType = taskType;
         this.taskDescriptions = taskDescriptions;
     }

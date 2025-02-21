@@ -1,25 +1,26 @@
 .root {
-    main-color: rgb(237, 255, 242);       /* Create a looked-up color called "main-color" within root. */
-    -fx-background-color: main-color;
+    -fx-background-image: url("../images/dododo.png"); /* Set image */
+    -fx-background-repeat: repeat;
 }
 
 .text-field {
-    -fx-background-color: #d9ffe2;
-    -fx-font: 20px "Arial";
+    -fx-background-color: #063238;
+    -fx-font: bold 16px "Courier New";
+    -fx-text-fill: white;
 }
 
 .button {
-    -fx-background-color: mediumspringgreen;
-    -fx-font: italic bold 16px "Arial";
+    -fx-background-color: white;
+    -fx-font: bold 16px "Courier New";
 }
 
 .button:hover {
-    -fx-background-color:cyan;
+    -fx-background-color: #7a7a7a;
     -fx-font-size: 18px;
 }
 
 .button:pressed {
-    -fx-background-color:orange;
+    -fx-background-color: #383838;
     -fx-font-size: 20px;
 }
 
@@ -30,11 +31,11 @@
 
 .scroll-bar {
     -fx-font-size: 10px;  /* Change width of scroll bar. */
-    -fx-background-color: main-color;
+    -fx-background-color: black;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
+    -fx-background-color: #858585;
     -fx-background-radius: 1em;
 }
 

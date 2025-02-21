@@ -5,6 +5,7 @@ import dodo.Dodo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -25,6 +26,8 @@ public class Main extends Application {
             stage.setMinHeight(220);
             stage.setMinWidth(417);
             fxmlLoader.<MainWindow>getController().setDodo(dodo); // inject the Dodo instance
+            Image icon = new Image("/images/dodo.png");
+            stage.getIcons().add(icon);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

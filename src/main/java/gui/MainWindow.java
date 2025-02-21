@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -25,8 +26,9 @@ public class MainWindow extends AnchorPane {
 
     private Dodo dodo;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Wojak.jpeg"));
-    private Image dodoImage = new Image(this.getClass().getResourceAsStream("/images/dodo.jpeg"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
+    private Image dodoImage = new Image(this.getClass().getResourceAsStream("/images/dodo.png"));
+    private Image backgroundImage = new Image(this.getClass().getResourceAsStream("/images/dododo.png"));
 
     /** Initialise gui elements */
     @FXML

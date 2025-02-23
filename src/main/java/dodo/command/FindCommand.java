@@ -34,7 +34,7 @@ public class FindCommand extends Command {
         try {
             DodoCheck.checkFindCommand(searchString);
         } catch (DodoException ex) {
-            ui.addPrintErrorPrefix(ex.getMessage());
+            return ui.addPrintErrorPrefix(ex.getMessage());
         }
 
         String description = searchString[1];

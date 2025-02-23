@@ -79,7 +79,11 @@ public class TaskList {
         TaskList filteredList = new TaskList();
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if (task.getDescription().contains(line)) {
+            String taskDescription = task.getDescription();
+
+            boolean directComparison = taskDescription.contains(line);
+            boolean caseInsensitiveComparison = taskDescription.toUpperCase().contains(line.toUpperCase());
+            if (directComparison || caseInsensitiveComparison) {
                 filteredList.addTask(task);
             }
         }

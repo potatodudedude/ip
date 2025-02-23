@@ -101,7 +101,7 @@ A unmarked task looks like:
 ```
 ## Find a task
 
-Type in `find NAME` to get Dodo to show you a list of tasks with the same name (case-sensitive).
+Type in `find NAME` to get Dodo to show you a list of tasks with the same name (case-insensitive).
 
 Partially accurate names will also be included.
 

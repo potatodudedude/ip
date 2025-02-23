@@ -165,18 +165,19 @@ public class UI {
      */
     public TextColourPair getHelpMessage() {
         return new TextColourPair("You got it boss! Here you go:\n"
+                + "UPPERCASE words represent your parameters to the command!\n"
                 + "list -> lists all current tasks and their numbering\n"
-                + "todo 'name' -> adds a task called 'name'\n"
-                + "commands that need 'time' must be in the yyyy-mm-dd hh:ss format\n"
-                + "deadline 'name' /by 'time' -> adds a task called 'name' with deadline of 'time'\n"
-                + "event 'name' /from 'start' to 'end' -> adds a task called 'name' with timeframe from "
-                + "'start' to 'end'\n"
-                + "mark 'task number' -> marks corresponding task as done\n"
-                + "unmark 'task number' -> marks corresponding task as undone\n"
-                + "delete 'task number' -> removes corresponding task\n"
-                + "due 'yyyy-mm-dd' -> returns a list with the provided due date\n"
-                + "find 'description' -> returns a list with tasks that have the description in their name\n"
-                + "bye or bb -> dododo",
+                + "todo NAME -> adds a task called NAME\n"
+                + "deadline NAME /by YYYY-MM-DD HH:MM -> adds a task called NAME a deadline\n"
+                + "event NAME /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM -> adds a task called NAME that occurs in a "
+                + "given timeframe\n"
+                + "mark TASK_NUMBER -> marks corresponding task as done\n"
+                + "unmark TASK_NUMBER -> marks corresponding task as undone\n"
+                + "delete TASK_NUMBER -> removes corresponding task\n"
+                + "due YYYY-MM-DD -> returns a list with tasks ongoing or due on a  date\n"
+                + "find DESCRIPTION -> returns a list with tasks that have the description in their name\n"
+                + "bye or bb -> dododo\n"
+                + "go to https://potatodudedude.github.io/ip/ for a more detailed guide!",
                 WHITE);
     }
 }
